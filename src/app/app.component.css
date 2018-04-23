@@ -1,13 +1,83 @@
-.container{
-    display: flex;
-}
-.float-left{
-float:left;
-overflow:hidden;
+.float-left {
+  float: left;
+  overflow: hidden;
 }
 
-.card {
-    height:200px;
-    width:450px;
-    overflow: scroll;
+.card-day {
+  height: 20px;
+  width: 13.5%;
+  border: none;
+  overflow: scroll;
+  margin-bottom: 20px;
+}
+
+.card-month {
+  height: 130px;
+  width: 13%;
+  overflow: scroll;
+}
+
+/* expanding input CSS only */
+#myInput {
+  width: 230px;
+  transition: width 0.3s ease-in-out;
+  text-indent: 18px;
+  margin: 5px;
+}
+
+#myInput:focus {
+  width: 280px;
+  transition: width 0.5s ease-in-out;
+  outline: 0;
+  border-color: lightgrey;
+  box-shadow: none;
+}
+
+.fa-search {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: -37px;
+  right: -15px;
+  color: grey;
+}
+
+.fa-times:hover {
+  cursor: pointer;
+}
+
+div {
+  font-family: 'Noto Sans"', 'Bree Serif', 'Varela Round', 'Libre Baskerville', serif;
+}
+
+.month-carousel {
+  font-size: 3em;
+}
+
+.results {
+  height: 100%;
+}
+
+.month-arrow {
+  font-size: 2.9em;
+  opacity: 0.5;
+  margin: 0 10px 0 10px;
+}
+
+.month-arrow:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.search-input {
+  margin-top:15px;
+}
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948;
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442;
 }

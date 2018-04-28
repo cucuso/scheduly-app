@@ -20,7 +20,7 @@ export class AppComponent {
 
   // TODO convert to pipe
   monthsTxt = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  daysTxt = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  daysTxt = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   today: number = Date.now();
   // TODO look into this day of month only being used for bg
   dayOfMonth = moment(this.today).date();
@@ -33,6 +33,7 @@ export class AppComponent {
 
   appointments = appointments;
   appointment = <Appointment>{};
+  selectedAppt;
 
   searchDomain = [];
   searchResults = [];
@@ -40,16 +41,29 @@ export class AppComponent {
   searchParam;
 
   submitted = false;
+  dayOfWeekFirstOfMonth = new Array(moment(this.getSelectedMonth()).day());
 
   constructor(private modalService: BsModalService) {}
 
   // Check only when no input is selected
   @HostListener('document:keydown', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) { 
+  handleKeyboardEvent(event: KeyboardEvent) {
+
+    console.log(event);
+
     if (event.key == 'ArrowLeft' && event.srcElement.localName == 'body') {
       this.decreaseMonth();
     } else if (event.key == 'ArrowRight' && event.srcElement.localName == 'body') {
       this.increaseMonth();
+    } else if ((event.key == 'Delete'|| event.key == 'Backspace') && this.selectedAppt) {
+      this.removeAppt(this.selectedAppt.month, this.selectedAppt.day, this.selectedAppt.index);
+    }
+  }
+  // Clear selected appointment
+  @HostListener('click', ['$event'])
+  onClick(event) {
+    if (event.srcElement.className != 'card-link') {
+      this.selectedAppt = null;
     }
   }
 
@@ -61,7 +75,10 @@ export class AppComponent {
 
   saveAppt() {
     this.appointments[this.month][this.day].push(this.appointment);
-    this.searchDomain.push({ date: this.month + 1 + '/' + this.day + '/' + this.year, text: JSON.stringify(this.appointment.title + this.appointment.description) });
+    this.searchDomain.push({
+      date: this.month + 1 + '/' + this.day + '/' + this.year,
+      text: JSON.stringify(this.appointment.title + this.appointment.description)
+    });
     this.appointment = <Appointment>{};
     this.modalRef.hide();
   }
@@ -70,6 +87,14 @@ export class AppComponent {
   removeAppt(month, day, appt) {
     this.appointments[month][day].splice(appt, 1);
     this.modalRef.hide();
+  }
+
+  selectAppt(month, day, index) {
+    this.selectedAppt = { month: month, day: day, index: index };
+  }
+
+  isSelected(month, day, index) {
+    return JSON.stringify(this.selectedAppt) == JSON.stringify({ month: month, day: day, index: index });
   }
 
   searchAppts(input) {
@@ -85,6 +110,7 @@ export class AppComponent {
     } else {
       this.month++;
     }
+    this.dayOfWeekFirstOfMonth = new Array(moment(this.getSelectedMonth()).day());
   }
 
   decreaseMonth() {
@@ -94,5 +120,10 @@ export class AppComponent {
     } else {
       this.month--;
     }
+    this.dayOfWeekFirstOfMonth = new Array(moment(this.getSelectedMonth()).day());
+  }
+
+  getSelectedMonth() {
+    return this.year + '-' + (this.month + 1).toString().padStart(2, '0') + '-' + '01';
   }
 }

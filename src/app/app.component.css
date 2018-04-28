@@ -5,16 +5,18 @@
 
 .card-day {
   height: 20px;
-  width: 13.5%;
+  width: 13%;
   border: none;
   overflow: scroll;
   margin-bottom: 20px;
+  background-color: #EEE9D1;
 }
 
 .card-month {
   height: 130px;
   width: 13%;
   overflow: scroll;
+  box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* expanding input CSS only */
@@ -53,6 +55,7 @@ div {
 
 .month-carousel {
   font-size: 3em;
+  color: #1E3226;
 }
 
 .results {
@@ -71,13 +74,32 @@ div {
 }
 
 .search-input {
-  margin-top:15px;
+  margin-top: 1.5%;
+  margin-left: 9%;
+  margin-right: -9%;
 }
 
-.ng-valid[required], .ng-valid.required  {
-  border-left: 5px solid #42A948;
+.ng-valid[required],
+.ng-valid.required {
+  border-left: 5px solid #42a948;
 }
 
-.ng-invalid:not(form)  {
+.ng-invalid:not(form) {
   border-left: 5px solid #a94442;
+}
+
+.calendar {
+  margin-top: -20px;
+  padding-left: 10%;
+  background-color: #EEE9D1;
+}
+
+.header {
+  background-color: #97C0B7;
+  border-bottom: black;
+}
+
+.card-link {
+  font-size: .9em;
+  color:black;
 }

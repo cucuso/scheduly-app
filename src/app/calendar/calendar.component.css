@@ -1,0 +1,132 @@
+.float-left {
+    float: left;
+    overflow: hidden;
+  }
+  
+  .card-day {
+    height: 20px;
+    width: 13%;
+    border: none;
+    overflow: scroll;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    background-color: #eee9d1;
+    text-align: center;
+  }
+  
+  .card-month {
+    height: 130px;
+    width: 13%;
+    overflow: scroll;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  /* expanding input CSS only */
+  #myInput {
+    width: 230px;
+    transition: width 0.3s ease-in-out;
+    text-indent: 18px;
+    margin: 5px;
+  }
+  
+  #myInput:focus {
+    width: 280px;
+    transition: width 0.5s ease-in-out;
+    outline: 0;
+    border-color: lightgrey;
+    box-shadow: none;
+  }
+  
+  .fa-search {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top: -37px;
+    right: -15px;
+    color: grey;
+  }
+  
+  .fa-times:hover {
+    cursor: pointer;
+  }
+
+  .month-carousel {
+    font-size: 3em;
+    color: #1e3226;
+  }
+  
+  .month-arrow {
+    font-size: 2.9em;
+    opacity: 0.5;
+    margin: 0 10px 0 10px;
+  }
+  
+  .month-arrow:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  
+  .search-input {
+    margin-top: 1.5%;
+    margin-left: 9%;
+    margin-right: -9%;
+  }
+  
+  .ng-valid[required],
+  .ng-valid.required {
+    border-left: 5px solid #42a948;
+  }
+  
+  .ng-invalid:not(form) {
+    border-left: 5px solid #a94442;
+  }
+  
+  .calendar {
+    margin-top: -20px;
+    padding-left: 10%;
+    background-color: #eee9d1;
+  }
+  
+  .header {
+    background-color: #97c0b7;
+    border-bottom: black;
+  }
+  
+  .card-link {
+    font-size: 0.9em;
+    color: black;
+  }
+  
+  .card-link:hover, .link:hover {
+    cursor: pointer;
+    color: #97c0b7;
+  }
+  
+  .prev-day {
+    background-color: rgb(243, 240, 240);
+  }
+  
+  .day-title {
+    margin-top: -20px;
+    margin-left: -15px;
+  }
+  
+  .results-header {
+    font-size: 1.8em;
+  }
+  
+  .results-disp {
+    margin-top: 55px;
+    background-color:white;
+    padding:20px;
+    border-radius: 15px;
+  }
+  .search-results {
+    margin-top: -20px;
+    overflow: scroll;
+    height:90vh;
+    display: inline-block;
+    background-color: white;
+  }
+  

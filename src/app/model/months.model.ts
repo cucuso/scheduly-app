@@ -1,4 +1,4 @@
-const appointments = [
+const months = [
     // January
     {
        1: [],
@@ -398,6 +398,6 @@ const appointments = [
         30: [],
         31: []
     }
- ];
+ ]
 
- export {appointments};
+ export {months};

@@ -1,0 +1,120 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 header">
+      <div class="row">
+        <div class="col-sm-2 search-input">
+          <form (ngSubmit)="searchAppts(searchInput.value)" #searchForm="ngForm">
+            <div class="form-group">
+              <input type="text" class="form-control input-lg" style="outline:none" id="myInput" #searchInput placeholder="Search" />
+              <i class="fa fa-search"></i>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-sm-8 text-center">
+          <!-- TODO transitions from month to month and hover over each card-->
+          <i class="fa fa-caret-left month-arrow" (click)="decreaseMonth()"></i>
+          <span class="month-carousel">{{monthsTxt[month]}} {{year}}</span>
+          <i class="fa fa-caret-right month-arrow" (click)="increaseMonth()"></i>
+        </div>
+
+        <div class="col-sm-2">
+          <app-account-widget></app-account-widget>
+        </div>
+      </div>
+    </div>
+    <div class="calendar" [ngClass]=" showResults ? 'col-md-9': 'col-md-12'">
+      <div *ngFor="let day of daysTxt; let i of index;" class="card card-day" [ngClass]=" {'float-left': i%7!=0}">
+        {{day}}
+      </div>
+      <br>
+      <!-- days from previous month -->
+      <div *ngFor="let day of dayOfWeekFirstOfMonth" class="card card-month float-left prev-day">
+        <div class="card-body">
+        </div>
+      </div>
+
+      <!-- TODO fix the conditional styling -->
+      <div *ngFor="let day of Object.keys(appointments[year][month]); let i of index;" class="card card-month" [ngClass]="{'float-left': i +dayOfWeekFirstOfMonth.length %7!=0 }"
+        [ngStyle]="(dayOfMonth == day) && (currentMonth == month)? {'background-color':'#f4f5f7', 'border':'dashed', 'border-color':'grey'}:{'background-color':'white'}">
+        <div class="card-body" (dblclick)="openModal(template, month, day)">
+
+          <p class="card-title day-title">{{day}}</p>
+          <div *ngFor="let appt of appointments[year][month][day]; index as i;">
+            <span class="card-link" (click)="selectAppt(month, day, i)" [style.background-color]="isSelected(month, day, i)?'lightblue' : 'white'">{{appt.title}} - {{appt.time|date:'shortTime'}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="showResults" class="col-md-3 search-results">
+      <div class="row results-header">
+        <div class="col-sm-10 text-left">
+          <p>Search Results</p>
+        </div>
+        <div class="col-sm-2 text-right">
+          <i class="fa fa-times link" (click)="showResults=!showResults"></i>
+        </div>
+      </div>
+
+      <div *ngIf="searchResults.length < 1">
+        <p>No results found matching:
+          <b>{{searchParam}}</b>
+        </p>
+      </div>
+
+      <div *ngFor="let result of searchResults" class="results-disp jumbotron link" (click)="goToMonth(result.date)">
+        <h3>{{result.title}}</h3> {{result.date|date:'fullDate'}}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- TODO extract to separate component -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Add Appointment</h4>
+  </div>
+  <!-- TODO make sure its seleceted when open-->
+  <div class="modal-body">
+    <form #apptForm="ngForm">
+      <div class="form-group row">
+        <label for="title" class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-10">
+          <input type="text" name="title" class="form-control" id="title" [(ngModel)]="appointment.title" required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="desc" class="col-sm-2 col-form-label" style="font-size: .85em;">Description</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" id="desc" name="description" [(ngModel)]="appointment.description"> </textarea>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="time" class="col-sm-2 col-form-label">Time</label>
+        <div class="col-sm-10">
+          <timepicker [(ngModel)]="mytime" [showMeridian]="true" id="time" [(ngModel)]="appointment.time" name="time" required></timepicker>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="tel" class="col-sm-2 col-form-label">Phone #</label>
+        <div class="col-sm-8">
+          <input type="tel" class="form-control" name="tel" [(ngModel)]="appointment.phoneNumber">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="tel" class="col-sm-2 col-form-label">Text</label>
+        <div class="col-sm-8">
+
+          <input type="checkbox" class="form-control" name="textNotification" [(ngModel)]="appointment.textNotification">
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="modalRef.hide()">Cancel</button>
+    <button type="submit" class="btn btn-success" (click)="saveAppt()" [disabled]="!apptForm.form.valid">Save</button>
+  </div>
+</ng-template>

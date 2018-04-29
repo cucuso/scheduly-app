@@ -1,0 +1,14 @@
+<form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" required [(ngModel)]="user.email" name="email">
+  </div>
+
+  <div class="form-group">
+    <label for="alterEgo">Alter Ego</label>
+    <input type="password" class="form-control" id="alterEgo" [(ngModel)]="user.password" name="password">
+  </div>
+
+  <button class="btn btn-sucess">Submit</button>
+</form>

@@ -1,3 +1,11 @@
 <p>
-  Welcome, {{user}}!
-</p>
+  Welcome,
+  <span class="user-name" (click)="showMenu=!showMenu" placement="bottom">{{user}}!
+  </span>
+
+  <div *ngIf="showMenu" class="preferences card">
+    <div class="card-body">
+        <h6 (click)="signout()">Signout</h6> 
+        <h6>Account Settings</h6>
+    </div>
+  </div>

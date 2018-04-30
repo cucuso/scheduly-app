@@ -1,5 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
-import { HostListener } from '@angular/core';
+import { Component, TemplateRef, HostListener } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as moment from 'moment';
@@ -137,8 +136,9 @@ export class CalendarComponent {
     return this.year + '-' + (this.month + 1).toString().padStart(2, '0') + '-' + '01';
   }
 
-  goToMonth(date) {
+  selectResult(date) {
     this.month = moment(date).month();
+    this.year = moment(date).year();
   }
 
   // TODO unit test for this stuff

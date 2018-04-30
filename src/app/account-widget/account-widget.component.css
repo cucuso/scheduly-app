@@ -1,0 +1,8 @@
+h6:hover, .user-name:hover {
+  cursor: pointer;
+}
+
+.preferences {
+  position: absolute;
+  z-index: 50000;
+}

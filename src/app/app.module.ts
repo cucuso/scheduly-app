@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http'
 
-import { ModalModule, TimepickerModule } from 'ngx-bootstrap';
+import { ModalModule, TimepickerModule, TooltipModule } from 'ngx-bootstrap';
 import { Ng2Webstorage } from 'ngx-webstorage';
 
 import { AppComponent } from './app.component';
@@ -25,6 +25,7 @@ const appRoutes: Routes = [
     BrowserModule,
     ModalModule.forRoot(),
     TimepickerModule.forRoot(),
+    TooltipModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     FormsModule,
     HttpClientModule,

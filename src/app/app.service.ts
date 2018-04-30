@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
- 
-
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 @Injectable()
 export class AppService {
-  
   configUrl = 'http://localhost:8080/signup';
 
   constructor(private http: HttpClient, private localStorage: LocalStorageService) {}
@@ -16,8 +13,11 @@ export class AppService {
   }
 
   public setUser(email) {
-    // will return true if successful
     this.localStorage.store('email', email);
+  }
+
+  public removeUser() {
+    this.localStorage.clear('email');
   }
 
   public createUser(user) {

@@ -52,12 +52,12 @@
   }
 
   .month-carousel {
-    font-size: 3em;
+    font-size: 2em;
     color: #1e3226;
   }
   
   .month-arrow {
-    font-size: 2.9em;
+    font-size: 2em;
     opacity: 0.5;
     margin: 0 10px 0 10px;
   }
@@ -68,7 +68,7 @@
   }
   
   .search-input {
-    margin-top: 1.5%;
+    margin-top: .5%;
     margin-left: 9%;
     margin-right: -9%;
   }
@@ -83,14 +83,17 @@
   }
   
   .calendar {
-    margin-top: -20px;
+
     padding-left: 10%;
     background-color: #eee9d1;
   }
   
   .header {
     background-color: #97c0b7;
-    border-bottom: black;
+    box-shadow: 0 1px 4px rgba(0,0,0,.15);
+    position: relative;
+    height: 3.75rem;
+    z-index: 10;
   }
   
   .card-link {
@@ -123,10 +126,10 @@
     border-radius: 15px;
   }
   .search-results {
-    margin-top: -20px;
     overflow: scroll;
     height:90vh;
     display: inline-block;
     background-color: white;
+    z-index: 11;
   }
   

@@ -6,6 +6,8 @@ import { Appointments } from '../model/appointments.model';
 import { Appointment } from '../model/appointment.model';
 import { months } from '../model/months.model';
 
+
+//TODO there is bug when searching and clickng on date it will just add to day of current month
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',

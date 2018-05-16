@@ -41,4 +41,8 @@ export class AccountWidgetComponent implements OnInit {
     this.appService.removeUser();
     this.router.navigateByUrl("/");
   }
+
+  goToAccountSettings() {
+    this.router.navigateByUrl("/account-settings");
+  }
 }

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 
 import { ModalModule, TimepickerModule, TooltipModule } from 'ngx-bootstrap';
 import { Ng2Webstorage } from 'ngx-webstorage';
@@ -12,15 +12,17 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { CalendarComponent } from './calendar/calendar.component';
 import { AccountWidgetComponent } from './account-widget/account-widget.component';
 import { AppService } from './app.service';
+import { AboutComponent } from './about/about.component';
 
 const appRoutes: Routes = [
   { path: 'account-settings', component: AccountSettingsComponent },
   { path: 'calendar', component: CalendarComponent },
+  { path: 'about', component: AboutComponent },
   { path: '**', component: AppComponent }
 ];
 
 @NgModule({
-  declarations: [AppComponent, AccountSettingsComponent, CalendarComponent, AccountWidgetComponent],
+  declarations: [AppComponent, AccountSettingsComponent, CalendarComponent, AccountWidgetComponent, AboutComponent],
   imports: [
     BrowserModule,
     ModalModule.forRoot(),

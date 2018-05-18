@@ -1,34 +1,47 @@
-<div *ngIf="!createFlow" id="fs_modal_header"><h3>Account Preferences <i class="fa fa-times link" (click)="close()"></i></h3></div>
+<div *ngIf="!createFlow" id="fs_modal_header">
+  <h3>Account Preferences
+    <i class="fa fa-times link" [routerLink]="['/calendar']"></i>
+  </h3>
+</div>
 
 <div class="container">
   <div class="row">
 
-      <div *ngIf="!createFlow" class="offset-md-3 col-md-6 card">
+    <div *ngIf="!createFlow" class="offset-md-3 col-md-6 card">
 
-          Email: {{user.email}}
-          <br>
-          Version: Not Paid
-          <br>
-          <h2> Upgrade to paid Version</h2>
+      Email: {{user.email}}
+      <br> Version: Not Paid
+      <br>
+      <h2> Upgrade to paid Version</h2>
+ 
+
+     
+  
+          <label for="card-element">
+            Credit or debit card
+          </label>
+          <div id="card-element">
+            <!-- A Stripe Element will be inserted here. -->
+          </div>
+      
+          <!-- Used to display form errors. -->
+          <div id="card-errors" role="alert"></div>
+     
+        <button (click)="submitPayment()" class="btn btn-success">Submit Payment</button>
 
 
-          //TODO Form goes here to signup with STRIPE and get token
-          send token to service to update account status
-          
-          
 
 
 
 
 
-       
-        </div>
+    </div>
 
 
 
     <div *ngIf="createFlow" class="offset-md-3 col-md-6 card">
       <h1>Create Account</h1>
-      <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+      <form (ngSubmit)="createUser()" #heroForm="ngForm">
 
 
         <div class="form-group">

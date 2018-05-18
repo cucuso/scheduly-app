@@ -45,4 +45,8 @@ export class AccountWidgetComponent implements OnInit {
   goToAccountSettings() {
     this.router.navigateByUrl("/account-settings");
   }
+
+  goToAbout() {
+    this.router.navigateByUrl("/about");
+  }
 }

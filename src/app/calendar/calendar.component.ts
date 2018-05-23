@@ -1,11 +1,11 @@
-import { Component, TemplateRef, HostListener } from '@angular/core';
+import { Component, TemplateRef, HostListener, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as moment from 'moment';
 import { Appointments } from '../model/appointments.model';
 import { Appointment } from '../model/appointment.model';
 import { months } from '../model/months.model';
-
+import { AppService } from '../app.service';
 
 //TODO there is bug when searching and clickng on date it will just add to day of current month
 @Component({
@@ -13,7 +13,7 @@ import { months } from '../model/months.model';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
   // Needed to iterate over keys which are the days in each month
   Object = Object;
   modalRef: BsModalRef;
@@ -32,7 +32,7 @@ export class CalendarComponent {
   day = 1;
   mytime: Date = new Date();
 
-  appointments = { 2018: JSON.parse(JSON.stringify(months)) };
+  appointments;
   appointment = <Appointment>{};
   selectedAppt;
 
@@ -44,8 +44,21 @@ export class CalendarComponent {
   submitted = false;
   dayOfWeekFirstOfMonth = new Array(moment(this.getSelectedMonth()).day());
 
+  editFlow = false;
+  editFlowIndex = 0;
+
   // TODO on ngonit load from previous save
-  constructor(private modalService: BsModalService) {}
+  constructor(private modalService: BsModalService, private appService: AppService) {}
+
+  ngOnInit() {
+    this.appointments =
+      this.appService.getAppts() !== undefined ? this.appService.getAppts() : { 2018: JSON.parse(JSON.stringify(months)) };
+  
+      this.modalService.onHide.subscribe(event => {
+        this.resetValues();
+      })
+  
+    }
 
   // Check only when no input is selected
   @HostListener('document:keydown', ['$event'])
@@ -63,6 +76,8 @@ export class CalendarComponent {
   onClick(event) {
     if (event.srcElement.className != 'card-link') {
       this.selectedAppt = null;
+      this.editFlow = false;
+      this.editFlowIndex = 0;
     }
   }
 
@@ -72,14 +87,33 @@ export class CalendarComponent {
     this.day = day;
   }
 
+  editAppt(template: TemplateRef<any>, month, day, i) {
+    this.month = month;
+    this.day = day;
+    this.appointment = this.appointments[this.year][month][day][i];
+    this.editFlow = true;
+    this.editFlowIndex = i;
+  }
+
   saveAppt() {
-    this.appointments[this.year][this.month][this.day].push(this.appointment);
-    this.appointments[this.year][this.month][this.day].sort((v1, v2) => v1.time - v2.time);
-    this.searchDomain.push({
-      date: new Date(this.month + 1 + '/' + this.day + '/' + this.year),
-      text: JSON.stringify(this.appointment.title + ' ' + this.appointment.description),
-      title: this.appointment.title
-    });
+    // TODO have to figure out the edit and how to handle the search
+    if (this.editFlow) {
+      this.appointments[this.year][this.month][this.day][this.editFlowIndex] = this.appointment;
+    } else {
+      this.appointments[this.year][this.month][this.day].push(this.appointment);
+      this.appointments[this.year][this.month][this.day].sort((v1, v2) => v1.time - v2.time);
+      this.searchDomain.push({
+        date: new Date(this.month + 1 + '/' + this.day + '/' + this.year),
+        text: JSON.stringify(this.appointment.title + ' ' + this.appointment.description + ' ' + this.appointment.phoneNumber),
+        title: this.appointment.title,
+        phoneNumber: this.appointment.phoneNumber
+      });
+    }
+    this.modalRef.hide();
+    this.resetValues();
+  }
+
+  cancelAppt() {
     this.appointment = <Appointment>{ time: new Date() };
     this.modalRef.hide();
   }
@@ -91,7 +125,7 @@ export class CalendarComponent {
     if (indexOfSearch !== -1) {
       this.searchDomain.splice(indexOfSearch, 1);
     }
-    this.modalRef.hide();
+    this.appService.saveAppts(this.appointments);
   }
 
   selectAppt(month, day, index) {
@@ -141,6 +175,13 @@ export class CalendarComponent {
   selectResult(date) {
     this.month = moment(date).month();
     this.year = moment(date).year();
+  }
+
+  resetValues() {
+    this.appService.saveAppts(this.appointments);
+    this.appointment = <Appointment>{ time: new Date() };
+    this.editFlow = false;
+    this.editFlowIndex = 0;
   }
 
   // TODO unit test for this stuff

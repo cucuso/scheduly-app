@@ -29,6 +29,14 @@ export class AppService {
     this.localStorage.clear('token');
   }
 
+  public saveAppts(appointments) {
+    this.localStorage.store('appts', appointments);
+  }
+
+  public getAppts() {
+    return this.localStorage.retrieve('appts');
+  }
+
   public createUser(user) {
     return this.http.post(this.configUrl + '/signup', user);
   }

@@ -8,3 +8,4 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## TODO
 check out https://github.com/xx45/dayjs instead of momentjs 
+persist appts

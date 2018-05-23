@@ -9,9 +9,9 @@ export class AboutComponent implements OnInit {
 
   constructor() { }
 
+  createFlow = false;
+
   ngOnInit() {
   }
-  close() {
-    this.router.navigateByUrl('/calendar');
-  }
+
 }

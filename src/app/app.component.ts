@@ -19,7 +19,6 @@ export class AppComponent{
   constructor(private router: Router, route:ActivatedRoute, private appService:AppService){
     route.params.subscribe(val => {
       let user = this.appService.getUser();
-      console.log(user);
       if(!user){
         this.router.navigateByUrl("/account-settings");
       } else {

@@ -11,7 +11,6 @@ export class AboutComponent implements OnInit {
 
   createFlow = false;
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

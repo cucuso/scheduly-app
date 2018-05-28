@@ -7,7 +7,6 @@ import { Appointment } from '../model/appointment.model';
 import { months } from '../model/months.model';
 import { AppService } from '../app.service';
 
-//TODO there is bug when searching and clickng on date it will just add to day of current month
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -27,14 +26,13 @@ export class CalendarComponent implements OnInit {
   currentMonth = moment(this.today).month();
 
   month = this.currentMonth;
-  // TODO get this year program
   year = moment(this.today).year();
   day = 1;
   mytime: Date = new Date();
 
   appointments;
   appointment = <Appointment>{};
-  selectedAppt;
+  selectedAppt = { id: '', month: '', day: '', index: '' };
 
   searchDomain = [];
   searchResults = [];
@@ -47,18 +45,12 @@ export class CalendarComponent implements OnInit {
   editFlow = false;
   editFlowIndex = 0;
 
-  // TODO on ngonit load from previous save
   constructor(private modalService: BsModalService, private appService: AppService) {}
 
   ngOnInit() {
-    this.appointments =
-      this.appService.getAppts() !== undefined ? this.appService.getAppts() : { 2018: JSON.parse(JSON.stringify(months)) };
-  
-      this.modalService.onHide.subscribe(event => {
-        this.resetValues();
-      })
-  
-    }
+    this.appointments = this.appService.getAppts() !== null ? this.appService.getAppts() : { 2018: JSON.parse(JSON.stringify(months)) };
+    this.searchDomain = this.appService.getApptsSearchDomain() !== null ? this.appService.getApptsSearchDomain() : [];
+  }
 
   // Check only when no input is selected
   @HostListener('document:keydown', ['$event'])
@@ -67,7 +59,7 @@ export class CalendarComponent implements OnInit {
       this.decreaseMonth();
     } else if (event.key == 'ArrowRight' && event.srcElement.localName == 'body') {
       this.increaseMonth();
-    } else if ((event.key == 'Delete' || event.key == 'Backspace') && this.selectedAppt) {
+    } else if ((event.key == 'Delete' || event.key == 'Backspace') && this.selectedAppt && !this.editFlow) {
       this.removeAppt(this.selectedAppt.month, this.selectedAppt.day, this.selectedAppt.index);
     }
   }
@@ -96,44 +88,44 @@ export class CalendarComponent implements OnInit {
   }
 
   saveAppt() {
-    // TODO have to figure out the edit and how to handle the search
     if (this.editFlow) {
+      console.log('edit flow', this.appointment.id);
       this.appointments[this.year][this.month][this.day][this.editFlowIndex] = this.appointment;
+      this.updateSearchDomain();
     } else {
+      this.appointment.id = this.getId();
       this.appointments[this.year][this.month][this.day].push(this.appointment);
       this.appointments[this.year][this.month][this.day].sort((v1, v2) => v1.time - v2.time);
-      this.searchDomain.push({
-        date: new Date(this.month + 1 + '/' + this.day + '/' + this.year),
-        text: JSON.stringify(this.appointment.title + ' ' + this.appointment.description + ' ' + this.appointment.phoneNumber),
-        title: this.appointment.title,
-        phoneNumber: this.appointment.phoneNumber
-      });
+
+      this.addToSearchDomain();
     }
+
     this.modalRef.hide();
-    this.resetValues();
+    this.persistState();
   }
 
   cancelAppt() {
-    this.appointment = <Appointment>{ time: new Date() };
+    this.appointment = <Appointment>{};
     this.modalRef.hide();
+    console.log('cancelled');
   }
 
-  // Todo have to remove from view and search results and search set
   removeAppt(month, day, index) {
-    let indexOfSearch = this.findApptInSearchDomain(month, day, this.appointments[this.year][month][day][index]);
     this.appointments[this.year][month][day].splice(index, 1);
+    let indexOfSearch = this.findApptInSearchDomain();
     if (indexOfSearch !== -1) {
       this.searchDomain.splice(indexOfSearch, 1);
     }
-    this.appService.saveAppts(this.appointments);
+
+    this.persistState();
   }
 
-  selectAppt(month, day, index) {
-    this.selectedAppt = { month: month, day: day, index: index };
+  selectAppt(month, day, index, id) {
+    this.selectedAppt = { month: month, day: day, index: index, id: id };
   }
 
-  isSelected(month, day, index) {
-    return JSON.stringify(this.selectedAppt) == JSON.stringify({ month: month, day: day, index: index });
+  isSelected(id) {
+    return this.selectedAppt != undefined && this.selectedAppt.id == id;
   }
 
   searchAppts(input) {
@@ -173,24 +165,57 @@ export class CalendarComponent implements OnInit {
   }
 
   selectResult(date) {
-    this.month = moment(date).month();
     this.year = moment(date).year();
+    this.month = moment(date).month();
+    this.dayOfWeekFirstOfMonth = new Array(moment(this.getSelectedMonth()).day());
   }
 
-  resetValues() {
+  persistState() {
     this.appService.saveAppts(this.appointments);
-    this.appointment = <Appointment>{ time: new Date() };
+    this.appService.saveApptsSearchDomain(this.searchDomain);
+    this.appService.updateAppointments(this.appointments).subscribe(res => console.log(res));
+    this.appointment = <Appointment>{};
     this.editFlow = false;
     this.editFlowIndex = 0;
+    this.selectedAppt = null;
   }
 
   // TODO unit test for this stuff
-  private findApptInSearchDomain(month, day, appt): number {
+  private findApptInSearchDomain(): number {
     return this.searchDomain.findIndex(searchVal => {
-      return (
-        searchVal.date.getTime() == new Date(month + 1 + '/' + day + '/' + this.year).getTime() &&
-        searchVal.text == JSON.stringify(appt.title + ' ' + appt.description)
-      );
+      return this.selectedAppt.id == searchVal.id;
     });
+  }
+
+  private getId(): string {
+    return (
+      Math.random()
+        .toString(36)
+        .substring(2) + new Date().getTime().toString(36)
+    );
+  }
+
+  private addToSearchDomain() {
+    this.searchDomain.push({
+      id: this.appointment.id,
+      date: new Date(this.month + 1 + '/' + this.day + '/' + this.year),
+      text: JSON.stringify(this.appointment.title + ' ' + this.appointment.description + ' ' + this.appointment.phoneNumber),
+      title: this.appointment.title,
+      phoneNumber: this.appointment.phoneNumber
+    });
+  }
+
+  private updateSearchDomain() {
+    const index = this.searchDomain.findIndex(element => {
+      return (this.appointment.id === element.id);
+    });
+
+    let modifiedAppt = this.searchDomain[index];
+
+    modifiedAppt.text = this.appointment.title + ' ' + this.appointment.description + ' ' + this.appointment.phoneNumber;
+    modifiedAppt.title = this.appointment.title;
+    modifiedAppt.phoneNumber = this.appointment.phoneNumber;
+
+    this.searchDomain[index] = modifiedAppt;
   }
 }

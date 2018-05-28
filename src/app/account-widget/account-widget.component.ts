@@ -39,6 +39,7 @@ export class AccountWidgetComponent implements OnInit {
 
   signout() {
     this.appService.removeUser();
+    this.appService.clearAppts();
     this.router.navigateByUrl("/");
   }
 

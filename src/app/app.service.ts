@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class AppService {
-  configUrl = 'http://localhost:8080';
+
+  configUrl = environment.serviceUrl;
 
   constructor(private http: HttpClient, private localStorage: LocalStorageService) {}
 
@@ -14,6 +16,14 @@ export class AppService {
 
   public setUser(email) {
     this.localStorage.store('email', email);
+  }
+
+  public getExpDate() {
+    return this.localStorage.retrieve('expDate');
+  }
+
+  public setExpDate(expDate) {
+    this.localStorage.store('expDate', expDate);
   }
 
   public getToken() {

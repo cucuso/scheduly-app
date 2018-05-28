@@ -11,7 +11,9 @@ declare var Stripe: any;
   styleUrls: ['./account-settings.component.css']
 })
 export class AccountSettingsComponent implements OnInit, AfterViewInit {
-  user = { email: '' };
+  user = { email: ''};
+  expDate;
+  accountType;
   userForm: FormGroup;
   createFlow = true;
   accountSettingsFlow = false;
@@ -24,10 +26,22 @@ export class AccountSettingsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.user.email = this.appService.getUser();
+    console.log( this.appService.getExpDate());
+    this.expDate = this.appService.getExpDate();
+
+     if(this.expDate === undefined) {
+       this.accountType = 'FREE';
+     } else if(new Date(this.expDate) < new Date()){
+      this.accountType = 'EXPIRED';
+     }else if(new Date(this.expDate) > new Date()){
+      this.accountType = 'CURRENT';
+     }
+
+
     if (this.user.email !== null) {
       this.createFlow = false;
       this.accountSettingsFlow = true;
-      // Create a Stripe client.
+      // TODO change this to prod Create a Stripe client.
       this.stripe = Stripe('pk_test_IyAbAxs0SDqwmt1OkUHz3diy');
     } else {
       this.createForm();
@@ -76,9 +90,11 @@ export class AccountSettingsComponent implements OnInit, AfterViewInit {
       var card = elements.create('card', { style: style });
 
       // Add an instance of the card Element into the `card-element` <div>.
+      if(this.accountType !== 'CURRENT'){
       card.mount('#card-element');
 
       this.card = card;
+      }
     }
   }
 
@@ -128,9 +144,12 @@ export class AccountSettingsComponent implements OnInit, AfterViewInit {
         errorElement.textContent = '';
         // Send the token to your server.
         this.appService.pay(result.token).subscribe(res => {
-          console.log(res);
+         
+          this.appService.setExpDate(res['expirationDate']);
+          this.expDate = res['expirationDate'];
+          this.accountType = 'CURRENT';
+          
         });
-        console.log(result.token);
       }
     });
   }

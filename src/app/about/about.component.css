@@ -34,3 +34,16 @@
     opacity: 1;
   }
   
+
+  .container{
+    margin-top:100px;
+  }
+
+  header{
+    text-align: center;
+    padding:20px;
+  }
+
+  h1{
+    margin-bottom:30px;
+  }

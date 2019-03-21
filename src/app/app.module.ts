@@ -16,7 +16,7 @@ import { AboutComponent } from './about/about.component';
 
 const appRoutes: Routes = [
   { path: 'account-settings', component: AccountSettingsComponent },
-  { path: 'calendar', component: CalendarComponent },
+  { path: 'app', component: CalendarComponent },
   { path: 'about', component: AboutComponent },
   { path: '**', component: AppComponent }
 ];

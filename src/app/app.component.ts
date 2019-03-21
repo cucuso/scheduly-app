@@ -1,11 +1,4 @@
-import { Component, TemplateRef, OnInit } from '@angular/core';
-import { HostListener } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import * as moment from 'moment';
-import { Appointments } from './model/appointments.model';
-import { Appointment } from './model/appointment.model';
-import { months } from './model/months.model';
+import { Component } from '@angular/core';
 import { AppService } from './app.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -22,7 +15,7 @@ export class AppComponent{
       if(!user){
         this.router.navigateByUrl("/account-settings");
       } else {
-        this.router.navigateByUrl("/calendar");
+        this.router.navigateByUrl("/app");
       }
     });
   }

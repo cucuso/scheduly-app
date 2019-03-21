@@ -36,16 +36,18 @@
         </div>
       </div>
 
-      <!-- TODO fix the conditional styling -->
+      <!-- TODO fix the conditional styling - this fucks up when year changes -->
       <div *ngFor="let day of Object.keys(appointments[year][month]); let i of index;" class="card card-month" [ngClass]="{'float-left': i +dayOfWeekFirstOfMonth.length %7!=0 }"
         [ngStyle]="(dayOfMonth == day) && (currentMonth == month)? {'background-color':'#e9f1ef', 'border':'dashed', 'border-color':'#97c0b7'}:{'background-color':'white'}">
-        <div class="card-body" (dblclick)="openModal(template, month, day)">
+
+
+         <div class="card-body" (dblclick)="openModal(template, month, day)">
          
           <p class="card-title day-title">{{day}}</p>
           <div *ngFor="let appt of appointments[year][month][day]; index as i;">
             <span class="card-link" (click)="selectAppt(month, day, i, appt.id)" (dblclick)="editAppt(template, month, day, i)" [style.background-color]="isSelected(appt.id)?'lightblue' : 'white'">{{appt.title}} - {{appt.time|date:'shortTime'}}</span>
           </div>
-        </div>
+        </div> 
       </div>
     </div>
 

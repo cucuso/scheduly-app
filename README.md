@@ -1,6 +1,6 @@
-# Una
+# Bongo Scheduler
 
-Scheduler that allows to send text message reminders
+Scheduler that allows users to text customers
 
 ## Angular Info
 

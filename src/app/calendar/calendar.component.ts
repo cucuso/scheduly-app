@@ -48,7 +48,9 @@ export class CalendarComponent implements OnInit {
   constructor(private modalService: BsModalService, private appService: AppService) {}
 
   ngOnInit() {
-    this.appointments = this.appService.getAppts() !== null ? this.appService.getAppts() : { 2018: JSON.parse(JSON.stringify(months)) };
+
+    this.appointments = this.appService.getAppts() !== null ? this.appService.getAppts() : { 2019: JSON.parse(JSON.stringify(months)) };
+
     this.searchDomain = this.appService.getApptsSearchDomain() !== null ? this.appService.getApptsSearchDomain() : [];
   }
 

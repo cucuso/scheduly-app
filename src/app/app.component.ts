@@ -11,11 +11,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class AppComponent{
   constructor(private router: Router, route:ActivatedRoute, private appService:AppService){
     route.params.subscribe(val => {
-      let user = this.appService.getUser();
-      if(!user){
+      let token = this.appService.getToken();
+      if(!token){
         this.router.navigateByUrl("/account-settings");
       } else {
-        this.router.navigateByUrl("/app");
+        this.router.navigateByUrl("/");
       }
     });
   }

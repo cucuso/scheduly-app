@@ -1,12 +1,11 @@
 <p>
   Welcome,
-  <span class="user-name" (click)="showMenu=!showMenu" placement="bottom">{{user}}!
-  </span>
+  <span placement="bottom">{{userEmail}}! <i (click)="showMenu=!showMenu" class=" user-name fa fa-cog" aria-hidden="true"></i>
 
   <div *ngIf="showMenu" class="preferences card">
     <div class="card-body">
-        <h6 (click)="signout()">Signout</h6> 
-        <h6 (click)="goToAccountSettings()">Account Settings</h6>
-        <h6 (click)="goToAbout()">About</h6>
+      <h6 (click)="signout()">Signout</h6>
+      <h6 (click)="goToAccountSettings()">Account Settings</h6>
+      <h6 (click)="goToAbout()">About</h6>
     </div>
   </div>

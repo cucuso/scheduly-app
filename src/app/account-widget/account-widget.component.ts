@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from '../app.service';
 
@@ -11,16 +11,18 @@ import { AppService } from '../app.service';
   }
 })
 export class AccountWidgetComponent implements OnInit {
-  user;
+  userEmail;
   showMenu: boolean = false;
   public elementRef;
+
+  
 
   constructor(private router: Router, private appService: AppService, myElement: ElementRef) {
     this.elementRef = myElement;
   }
 
   ngOnInit() {
-    this.user = this.appService.getUser();
+    this.userEmail = this.appService.getUserEmail();
   }
 
   handleClick(event) {
@@ -40,7 +42,7 @@ export class AccountWidgetComponent implements OnInit {
   signout() {
     this.appService.removeUser();
     this.appService.clearAppts();
-    this.router.navigateByUrl("/");
+    this.router.navigateByUrl("/logout");
   }
 
   goToAccountSettings() {

@@ -11,8 +11,8 @@ declare var Stripe: any;
   styleUrls: ['./account-settings.component.css']
 })
 export class AccountSettingsComponent implements OnInit, AfterViewInit {
-  user = { email: ''};
-  expDate;
+  user = { email: '' };
+  expDate: Date;
   accountType;
   userForm: FormGroup;
   createFlow = true;
@@ -22,23 +22,26 @@ export class AccountSettingsComponent implements OnInit, AfterViewInit {
   stripe;
   card;
 
-  constructor(private router: Router, private appService: AppService, private fb: FormBuilder) {}
+  constructor(private router: Router, private appService: AppService, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.user.email = this.appService.getUser();
-    console.log( this.appService.getExpDate());
-    this.expDate = this.appService.getExpDate();
+    this.user.email = this.appService.getUserEmail();
 
-     if(this.expDate === undefined) {
-       this.accountType = 'FREE';
-     } else if(new Date(this.expDate) < new Date()){
-      this.accountType = 'EXPIRED';
-     }else if(new Date(this.expDate) > new Date()){
-      this.accountType = 'CURRENT';
-     }
 
 
     if (this.user.email !== null) {
+
+
+      this.appService.getExp().subscribe((res) => {
+        this.expDate = new Date(res.toString());
+        if (new Date(this.expDate) < new Date()) {
+          this.accountType = 'EXPIRED';
+        } else if (new Date(this.expDate) > new Date()) {
+          this.accountType = 'CURRENT';
+        }
+      });
+
+
       this.createFlow = false;
       this.accountSettingsFlow = true;
       // TODO change this to prod Create a Stripe client.
@@ -90,17 +93,16 @@ export class AccountSettingsComponent implements OnInit, AfterViewInit {
       var card = elements.create('card', { style: style });
 
       // Add an instance of the card Element into the `card-element` <div>.
-      if(this.accountType !== 'CURRENT'){
-      card.mount('#card-element');
+      if (this.accountType !== 'CURRENT') {
+        card.mount('#card-element');
 
-      this.card = card;
+        this.card = card;
       }
     }
   }
 
   createUser() {
     this.appService.createUser(this.userForm.value).subscribe(res => {
-      this.appService.setUser(this.userForm.get('email').value);
       this.appService.setToken(res['token']);
       this.router.navigateByUrl('/calendar');
     });
@@ -108,15 +110,13 @@ export class AccountSettingsComponent implements OnInit, AfterViewInit {
 
   loginUser() {
     this.appService.loginUser(this.userForm.value).subscribe(res => {
-      this.appService.setUser(this.userForm.get('email').value);
       this.appService.setToken(res['token']);
-    
 
-      this.appService.retrieveUserApptsFromServer().subscribe(res=> 
-        {
-          this.appService.saveAppts(res);
-          this.router.navigateByUrl('/calendar');
-        })
+
+      this.appService.retrieveUserApptsFromServer().subscribe(res => {
+        this.appService.saveAppts(res);
+        this.router.navigateByUrl('/calendar');
+      })
     });
   }
 
@@ -144,11 +144,7 @@ export class AccountSettingsComponent implements OnInit, AfterViewInit {
         errorElement.textContent = '';
         // Send the token to your server.
         this.appService.pay(result.token).subscribe(res => {
-         
-          this.appService.setExpDate(res['expirationDate']);
-          this.expDate = res['expirationDate'];
-          this.accountType = 'CURRENT';
-          
+
         });
       }
     });

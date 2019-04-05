@@ -31,7 +31,7 @@ export class CalendarComponent implements OnInit {
   mytime: Date = new Date();
 
   appointments;
-  appointment = <Appointment>{};
+  appointment = <Appointment>{contacted:false};
   selectedAppt = { id: '', month: '', day: '', index: '' };
 
   searchDomain = [];
@@ -176,7 +176,7 @@ export class CalendarComponent implements OnInit {
     this.appService.saveAppts(this.appointments);
     this.appService.saveApptsSearchDomain(this.searchDomain);
     this.appService.updateAppointments(this.appointments).subscribe(res => console.log(res));
-    this.appointment = <Appointment>{};
+    this.appointment = <Appointment>{contacted:false};
     this.editFlow = false;
     this.editFlowIndex = 0;
     this.selectedAppt = null;

@@ -2,29 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from 'ngx-webstorage';
 import { environment } from '../environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+const helper = new JwtHelperService();
 
 @Injectable()
 export class AppService {
 
   configUrl = environment.serviceUrl;
 
-  constructor(private http: HttpClient, private localStorage: LocalStorageService) {}
-
-  public getUser() {
-    return this.localStorage.retrieve('email');
-  }
-
-  public setUser(email) {
-    this.localStorage.store('email', email);
-  }
-
-  public getExpDate() {
-    return this.localStorage.retrieve('expDate');
-  }
-
-  public setExpDate(expDate) {
-    this.localStorage.store('expDate', expDate);
-  }
+  constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
   public getToken() {
     return this.localStorage.retrieve('token');
@@ -35,7 +22,6 @@ export class AppService {
   }
 
   public removeUser() {
-    this.localStorage.clear('email');
     this.localStorage.clear('token');
   }
 
@@ -82,6 +68,21 @@ export class AppService {
 
   public retrieveUserApptsFromServer() {
     return this.http.get(this.configUrl + '/appointments', {
+      headers: { Authorization: 'Bearer ' + this.getToken() }
+    });
+  }
+
+  public getUserEmail(): string {
+    if (this.getToken() != null) {
+      const decodedToken = helper.decodeToken(this.getToken());
+      return decodedToken.email;
+    } else {
+      return null;
+    }
+  }
+
+  public getExp() {
+    return this.http.get(this.configUrl + '/expiration', {
       headers: { Authorization: 'Bearer ' + this.getToken() }
     });
   }

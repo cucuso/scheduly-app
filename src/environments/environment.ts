@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  serviceUrl: 'http://localhost:8080'
+  //serviceUrl: 'http://schedulyservice-env.fj2uv7rynm.us-east-1.elasticbeanstalk.com/'
+  serviceUrl: 'http://localhost:5000'
 };

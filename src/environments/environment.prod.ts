@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serviceUrl: 'http://ec2-3-17-175-16.us-east-2.compute.amazonaws.com/'
+  serviceUrl: 'http://schedulyservice-env.fj2uv7rynm.us-east-1.elasticbeanstalk.com/'
 };

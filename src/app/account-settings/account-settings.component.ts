@@ -1,6 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AppService } from '../app.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AppService } from '../service/app.service';
 import { Router } from '@angular/router';
 
 declare var Stripe: any;
@@ -10,14 +10,11 @@ declare var Stripe: any;
   templateUrl: './account-settings.component.html',
   styleUrls: ['./account-settings.component.css']
 })
-export class AccountSettingsComponent implements OnInit, AfterViewInit {
+export class AccountSettingsComponent implements OnInit {
   user = { email: '' };
   expDate: Date;
   accountType;
   userForm: FormGroup;
-  createFlow = true;
-  accountSettingsFlow = false;
-  loginFlow = false;
   sign;
   stripe;
   card;
@@ -27,109 +24,24 @@ export class AccountSettingsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.user.email = this.appService.getUserEmail();
 
-
-
     if (this.user.email !== null) {
-
-
       this.appService.getExp().subscribe((res) => {
+
         this.expDate = new Date(res.toString());
         if (new Date(this.expDate) < new Date()) {
           this.accountType = 'EXPIRED';
         } else if (new Date(this.expDate) > new Date()) {
           this.accountType = 'CURRENT';
         }
+      }, err => {
+        console.error(err);
+        this.appService.removeUser();
+        this.router.navigate['/'];
       });
 
-
-      this.createFlow = false;
-      this.accountSettingsFlow = true;
       // TODO change this to prod Create a Stripe client.
       this.stripe = Stripe('pk_test_IyAbAxs0SDqwmt1OkUHz3diy');
-    } else {
-      this.createForm();
     }
-  }
-
-  createForm() {
-    this.userForm = this.fb.group({
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.required],
-    });
-  }
-
-  ngAfterViewInit() {
-    if (this.accountSettingsFlow === true) {
-      // Create an instance of Elements.
-      var elements = this.stripe.elements();
-
-      // Custom styling can be passed to options when creating an Element.
-      // (Note that this demo uses a wider set of styles than the guide below.)
-      var style = {
-        base: {
-          color: '#32325D',
-          fontWeight: 500,
-          fontFamily: 'Source Code Pro, Consolas, Menlo, monospace',
-          fontSize: '16px',
-          fontSmoothing: 'antialiased',
-
-          '::placeholder': {
-            color: '#CFD7DF'
-          },
-          ':-webkit-autofill': {
-            color: '#e39f48'
-          }
-        },
-        invalid: {
-          color: '#E25950',
-
-          '::placeholder': {
-            color: '#FFCCA5'
-          }
-        }
-      };
-
-      // Create an instance of the card Element.
-      var card = elements.create('card', { style: style });
-
-      // Add an instance of the card Element into the `card-element` <div>.
-      if (this.accountType !== 'CURRENT') {
-        card.mount('#card-element');
-
-        this.card = card;
-      }
-    }
-  }
-
-  createUser() {
-    this.appService.createUser(this.userForm.value).subscribe(res => {
-      this.appService.setToken(res['token']);
-      this.router.navigateByUrl('/calendar');
-    });
-  }
-
-  loginUser() {
-    this.appService.loginUser(this.userForm.value).subscribe(res => {
-      this.appService.setToken(res['token']);
-
-
-      this.appService.retrieveUserApptsFromServer().subscribe(res => {
-        this.appService.saveAppts(res);
-        this.router.navigateByUrl('/calendar');
-      })
-    });
-  }
-
-  goToCreate() {
-    this.createFlow = true;
-    this.accountSettingsFlow = false;
-    this.loginFlow = false;
-  }
-
-  goToLogin() {
-    this.createFlow = false;
-    this.accountSettingsFlow = false;
-    this.loginFlow = true;
   }
 
   // TODO clean this method up

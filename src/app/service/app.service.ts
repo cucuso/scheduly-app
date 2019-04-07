@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from 'ngx-webstorage';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 const helper = new JwtHelperService();

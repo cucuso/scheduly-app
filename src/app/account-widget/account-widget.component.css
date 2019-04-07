@@ -6,3 +6,7 @@ h6:hover, .user-name:hover {
   position: absolute;
   z-index: 50000;
 }
+
+.account-text {
+  color:#fff;
+}

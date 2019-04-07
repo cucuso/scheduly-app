@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppService } from '../app.service';
+import { AppService } from '../service/app.service';
 
 @Component({
   selector: 'app-account-widget',
@@ -11,11 +11,10 @@ import { AppService } from '../app.service';
   }
 })
 export class AccountWidgetComponent implements OnInit {
-  userEmail;
-  showMenu: boolean = false;
-  public elementRef;
 
-  
+  userEmail: string;
+  showMenu: boolean = false;
+  public elementRef: ElementRef;
 
   constructor(private router: Router, private appService: AppService, myElement: ElementRef) {
     this.elementRef = myElement;
@@ -42,7 +41,7 @@ export class AccountWidgetComponent implements OnInit {
   signout() {
     this.appService.removeUser();
     this.appService.clearAppts();
-    this.router.navigateByUrl("/logout");
+    this.router.navigateByUrl("/login");
   }
 
   goToAccountSettings() {

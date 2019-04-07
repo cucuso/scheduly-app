@@ -10,7 +10,7 @@
     overflow: scroll;
     margin-bottom: 20px;
     margin-top: 10px;
-    background-color: #eee9d1;
+    background-color:#f9fbfc;
     text-align: center;
   }
   
@@ -55,13 +55,14 @@
 
   .month-carousel {
     font-size: 2em;
-    color: #1e3226;
+    color: #fff;
   }
   
   .month-arrow {
     font-size: 2em;
     opacity: 0.5;
     margin: 0 10px 0 10px;
+    color:#fff;
   }
   
   .month-arrow:hover {
@@ -84,11 +85,11 @@
   
   .calendar {
     padding-left: 2.5%;
-    background-color: #eee9d1;
+    background-color: #f9fbfc;
   }
   
   .header {
-    background-color: #97c0b7;
+    background-color: #0b3e69;
     box-shadow: 0 1px 4px rgba(0,0,0,.15);
     position: relative;
     height: 3.75rem;
@@ -131,5 +132,13 @@
     background-color: white;
     z-index: 11;
   }
-  
 
+  .is-today-card {
+    background-color:#e5f0fa;
+    border:dashed;
+    border-color:#0b3e69
+  }
+
+  .generic-card {
+    background-color:#fff;
+  }

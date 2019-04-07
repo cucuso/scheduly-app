@@ -11,18 +11,22 @@ import { AppComponent } from './app.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { AccountWidgetComponent } from './account-widget/account-widget.component';
-import { AppService } from './app.service';
+import { AppService } from './service/app.service';
 import { AboutComponent } from './about/about.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { AuthGuardService } from './service/auth.service';
 
 const appRoutes: Routes = [
-  { path: 'account-settings', component: AccountSettingsComponent },
-  { path: '', component: CalendarComponent },
-  { path: 'about', component: AboutComponent },
-  { path: '**', component: AppComponent }
+  { path: 'account-settings', component: AccountSettingsComponent, canActivate: [AuthGuardService] },
+  { path: 'login', component:LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: '', component: CalendarComponent, canActivate: [AuthGuardService] },
+  { path: 'about', component: AboutComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({
-  declarations: [AppComponent, AccountSettingsComponent, CalendarComponent, AccountWidgetComponent, AboutComponent],
+  declarations: [AppComponent, LoginComponent, SignupComponent, AccountSettingsComponent, CalendarComponent, AccountWidgetComponent, AboutComponent],
   imports: [
     BrowserModule,
     ModalModule.forRoot(),
@@ -34,7 +38,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     Ng2Webstorage
   ],
-  providers: [AppService],
+  providers: [AppService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

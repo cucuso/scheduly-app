@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { Appointments } from '../model/appointments.model';
 import { Appointment } from '../model/appointment.model';
 import { months } from '../model/months.model';
-import { AppService } from '../app.service';
+import { AppService } from '../service/app.service';
 
 @Component({
   selector: 'app-calendar',

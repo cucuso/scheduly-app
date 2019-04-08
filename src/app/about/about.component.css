@@ -1,49 +1,53 @@
 .card {
-    margin-top: 150px;
-    padding: 10px;
-  }
-  
-  #fs_modal_header {
-    display: flex;
-    align-items: center;
-    -ms-flex-pack: center;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-justify-content: center;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3.75rem;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-    background-color: #97c0b7;
-    box-sizing: border-box;
-  }
-  
-  .fa-times {
-    position: absolute;
-    top: 1rem;
-    right: 0;
-    display: block;
-    opacity: 0.6;
-  }
-  
-  .link:hover {
-    cursor: pointer;
-    opacity: 1;
-  }
-  
+  margin-top: 150px;
+  padding: 10px;
+}
 
-  .container{
-    margin-top:100px;
-  }
+#fs_modal_header {
+  display: flex;
+  align-items: center;
+  -ms-flex-pack: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.75rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  background-color: #0b3e69;
+  box-sizing: border-box;
+}
 
-  header{
-    text-align: center;
-    padding:20px;
-  }
+.fa-times {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+  display: block;
+  opacity: 0.6;
+  margin-right: 10px;
+}
 
-  h1{
-    margin-bottom:30px;
-  }
+.link:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.container {
+  margin-top: 100px;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 30px;
+}
+
+h3 {
+  color:#fff;
+}

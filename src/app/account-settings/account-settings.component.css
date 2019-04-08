@@ -17,7 +17,7 @@
   right: 0;
   height: 3.75rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-  background-color: #97c0b7;
+  background-color: #0b3e69;
   box-sizing: border-box;
 }
 
@@ -27,27 +27,32 @@
   right: 0;
   display: block;
   opacity: 0.6;
+  margin-right: 10px;
 }
 
 .link:hover {
   cursor: pointer;
   opacity: 1;
-  color:#97c0b7;
 }
 
-
-.ng-valid[required], .ng-valid.required  {
-  border-left: 5px solid #42A948; /* green */
+.ng-valid[required], .ng-valid.required {
+  border-left: 5px solid #42A948;
+  /* green */
 }
 
-.ng-invalid:not(form)  {
-  border-left: 5px solid #a94442; /* red */
+.ng-invalid:not(form) {
+  border-left: 5px solid #a94442;
+  /* red */
 }
 
 h1 {
-  margin-bottom:30px;
+  margin-bottom: 30px;
 }
 
-.account-info{
-  margin-bottom:20px;
+.account-info {
+  margin-bottom: 20px;
+}
+
+h3 {
+  color: #fff;
 }

@@ -14,7 +14,7 @@
     <form (ngSubmit)="createUser()" [formGroup]="userForm">
 
         <div class="form-group">
-            <input type="email" class="form-control" id="email" formControlName="Email Address" placeholder="Email">
+            <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email Address">
             <div *ngIf="!(userForm.valid||userForm.get('email').pristine) && userForm.get('email').hasError('required')"
                 class="alert alert-danger">
                 Email is required

@@ -1,6 +1,8 @@
-# Bongo Scheduler
+# Scheduly
+[![Build Status](https://travis-ci.org/cucuso/scheduly-app.svg?branch=master)](https://travis-ci.org/cucuso/scheduly-app)
 
 Scheduler that allows users to text customers
+
 
 ## Angular Info
 

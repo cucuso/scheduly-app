@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serviceUrl: 'service.scheduly.app'
+  serviceUrl: 'http://service.scheduly.app'
 };

@@ -44,10 +44,13 @@
         <div class="card-body" (dblclick)="openModal(template, month, day)">
 
           <p class="card-title day-title">{{day}}</p>
+
           <div *ngFor="let appt of appointments[year][month][day]; index as i;">
-            <span class="card-link" (click)="selectAppt(month, day, i, appt.id)" (dblclick)="editAppt(template, month, day, i)"
-              [style.background-color]="isSelected(appt.id)?'lightblue' : 'white'">{{appt.title}} -
-              {{appt.time|date:'shortTime'}}</span>
+            <!-- appt entry -->
+            <div class="card-link hvr-grow" (click)="selectAppt(month, day, i, appt.id)" (dblclick)="editAppt(template, month, day, i)"
+              [ngClass]="isSelected(appt.id) ? 'card-link-selected' : 'card-link'">
+              {{appt.title}}
+            </div>
           </div>
         </div>
       </div>

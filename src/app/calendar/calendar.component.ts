@@ -32,7 +32,7 @@ export class CalendarComponent implements OnInit {
 
   appointments;
   appointment = <Appointment>{contacted:false};
-  selectedAppt = { id: '', month: '', day: '', index: '' };
+  selectedAppt = null;
 
   searchDomain = [];
   searchResults = [];
@@ -48,9 +48,7 @@ export class CalendarComponent implements OnInit {
   constructor(private modalService: BsModalService, private appService: AppService) {}
 
   ngOnInit() {
-
     this.appointments = this.appService.getAppts() !== null ? this.appService.getAppts() : { 2019: JSON.parse(JSON.stringify(months)) };
-
     this.searchDomain = this.appService.getApptsSearchDomain() !== null ? this.appService.getApptsSearchDomain() : [];
   }
 
@@ -68,7 +66,8 @@ export class CalendarComponent implements OnInit {
   // Clear selected appointment
   @HostListener('click', ['$event'])
   onClick(event) {
-    if (event.srcElement.className != 'card-link') {
+
+    if (!event.srcElement.className.includes('card-link')) {
       this.selectedAppt = null;
       this.editFlow = false;
       this.editFlowIndex = 0;
@@ -113,6 +112,7 @@ export class CalendarComponent implements OnInit {
   }
 
   removeAppt(month, day, index) {
+    console.log('removing..',month, day, index);
     this.appointments[this.year][month][day].splice(index, 1);
     let indexOfSearch = this.findApptInSearchDomain();
     if (indexOfSearch !== -1) {
@@ -123,10 +123,14 @@ export class CalendarComponent implements OnInit {
   }
 
   selectAppt(month, day, index, id) {
-    this.selectedAppt = { month: month, day: day, index: index, id: id };
+    this.selectedAppt = { "month": month, "day": day, "index": index, "id": id };
+    console.log(this.selectedAppt);
   }
 
   isSelected(id) {
+    if(this.selectedAppt != undefined){
+      console.log(this.selectedAppt.id == id)
+    }
     return this.selectedAppt != undefined && this.selectedAppt.id == id;
   }
 

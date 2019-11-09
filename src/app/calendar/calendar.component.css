@@ -97,13 +97,25 @@
   }
   
   .card-link {
-    font-size: 0.9em;
-    color: black;
+    padding:5px;
+    margin-bottom:2px;
+    border-radius: 10px;
+    background:#13b884;
+    font-size: 0.8em;
+    color: white;
+  }
+
+  .card-link-selected {
+    padding:5px;
+    margin-bottom:2px;
+    border-radius: 10px;
+    background:#d83838;
+    font-size: 0.8em;
+    color: white;
   }
   
   .card-link:hover, .link:hover {
     cursor: pointer;
-    color: #97c0b7;
   }
   
   .prev-day {
@@ -134,11 +146,28 @@
   }
 
   .is-today-card {
-    background-color:#e5f0fa;
-    border:dashed;
-    border-color:#0b3e69
+    background-color:#eaf0f5;
+    border-width: 1.5px;
+    border-color:#0b3e69;
   }
 
   .generic-card {
     background-color:#fff;
   }
+
+  /* Grow */
+.hvr-grow {
+  vertical-align: middle;
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  transition-duration: 0.3s;
+  transition-property: transform;
+}
+
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+  transform: scale(1.03);
+}

@@ -26,7 +26,6 @@
         </div>
 
         <div class="form-group">
-            <label for="password">Password</label>
             <input type="password" class="form-control" id="password" formControlName="password" pattern=".{5,}" placeholder="Password">
             <div *ngIf="!(userForm.valid||userForm.get('password').pristine) && userForm.get('password').hasError('required')"
                 class="alert alert-danger">

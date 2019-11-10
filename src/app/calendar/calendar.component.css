@@ -1,162 +1,155 @@
 .float-left {
-    float: left;
-    overflow: hidden;
-  }
-  
-  .card-day {
-    height: 20px;
-    width: 14%;
-    border: none;
-    overflow: scroll;
-    margin-bottom: 20px;
-    margin-top: 10px;
-    background-color:#f9fbfc;
-    text-align: center;
-  }
-  
-  .card-month {
-    height: 180px;
-    width: 14%;
-    overflow: scroll;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  
-  /* expanding input CSS only */
-  #searchInput {
-    width: 230px;
-    transition: width 0.3s ease-in-out;
-    text-indent: 18px;
-    margin: 5px;
-    z-index: 9999;
+  float: left;
+  overflow: hidden;
+}
 
-  }
-  
-  #searchInput:focus {
-    width: 280px;
-    transition: width 0.5s ease-in-out;
-    outline: 0;
-    border-color: lightgrey;
-    box-shadow: none;
-  }
-  
-  .fa-search {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    position: relative;
-    top: -37px;
-    right: -15px;
-    color: grey;
-  }
-  
-  .fa-times:hover {
-    cursor: pointer;
-  }
+.card-day {
+  height: 20px;
+  width: 14%;
+  border: none;
+  overflow: scroll;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  background-color: #f9fbfc;
+  text-align: center;
+}
 
-  .month-carousel {
-    font-size: 2em;
-    color: #fff;
-  }
-  
-  .month-arrow {
-    font-size: 2em;
-    opacity: 0.5;
-    margin: 0 10px 0 10px;
-    color:#fff;
-  }
-  
-  .month-arrow:hover {
-    opacity: 1;
-    cursor: pointer;
-  }
-  
-  .search-input {
-    margin-top: .5%;
-  }
-  
-  .ng-valid[required],
-  .ng-valid.required {
-    border-left: 5px solid #42a948;
-  }
-  
-  .ng-invalid:not(form) {
-    border-left: 5px solid #a94442;
-  }
-  
-  .calendar {
-    padding-left: 2.5%;
-    background-color: #f9fbfc;
-    margin-bottom:20px;
-  }
-  
-  .header {
-    background-color: #0b3e69;
-    box-shadow: 0 1px 4px rgba(0,0,0,.15);
-    position: relative;
-    height: 3.75rem;
-    z-index: 10;
-  }
-  
-  .card-link {
-    padding:5px;
-    margin-bottom:2px;
-    border-radius: 10px;
-    background:#13b884;
-    font-size: 0.8em;
-    color: white;
-  }
+.card-month {
+  height: 180px;
+  width: 14%;
+  overflow: scroll;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
-  .card-link-selected {
-    padding:5px;
-    margin-bottom:2px;
-    border-radius: 10px;
-    background:#d83838;
-    font-size: 0.8em;
-    color: white;
-  }
-  
-  .card-link:hover, .link:hover {
-    cursor: pointer;
-  }
-  
-  .prev-day {
-    background-color: rgb(243, 240, 240);
-  }
-  
-  .day-title {
-    margin-top: -20px;
-    margin-left: -15px;
-  }
-  
-  .results-header {
-    font-size: 1.8em;
-  }
-  
-  .results-disp {
-    margin-top: 55px;
-    background-color:white;
-    padding:20px;
-    border-radius: 15px;
-  }
-  .search-results {
-    overflow: scroll;
-    height:90vh;
-    display: inline-block;
-    background-color: white;
-    z-index: 11;
-  }
+/* expanding input CSS only */
 
-  .is-today-card {
-    background-color:#eaf0f5;
-    border-width: 1.5px;
-    border-color:#0b3e69;
-  }
+#searchInput {
+  width: 230px;
+  transition: width 0.3s ease-in-out;
+  text-indent: 18px;
+  margin: 5px;
+  z-index: 9999;
+}
 
-  .generic-card {
-    background-color:#fff;
-  }
+#searchInput:focus {
+  width: 280px;
+  transition: width 0.5s ease-in-out;
+  outline: 0;
+  border-color: lightgrey;
+  box-shadow: none;
+}
 
-  /* Grow */
+.fa-search {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  top: -37px;
+  right: -15px;
+  color: grey;
+}
+
+.fa-times:hover {
+  cursor: pointer;
+}
+
+.month-carousel {
+  font-size: 2em;
+  color: #fff;
+}
+
+.month-arrow {
+  font-size: 2em;
+  opacity: 0.5;
+  margin: 0 10px 0 10px;
+  color: #fff;
+}
+
+.month-arrow:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.search-input {
+  margin-top: .5%;
+}
+
+.calendar {
+  padding-left: 2.5%;
+  background-color: #f9fbfc;
+  margin-bottom: 20px;
+}
+
+.header {
+  background-color: #0b3e69;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
+  position: relative;
+  height: 3.75rem;
+  z-index: 10;
+}
+
+.card-link {
+  padding: 5px;
+  margin-bottom: 2px;
+  border-radius: 10px;
+  background: #13b884;
+  font-size: 0.8em;
+  color: white;
+}
+
+.card-link-selected {
+  padding: 5px;
+  margin-bottom: 2px;
+  border-radius: 10px;
+  background: #d83838;
+  font-size: 0.8em;
+  color: white;
+}
+
+.card-link:hover, .link:hover {
+  cursor: pointer;
+}
+
+.prev-day {
+  background-color: rgb(243, 240, 240);
+}
+
+.day-title {
+  margin-top: -20px;
+  margin-left: -15px;
+}
+
+.results-header {
+  font-size: 1.8em;
+}
+
+.results-disp {
+  margin-top: 55px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.search-results {
+  overflow: scroll;
+  height: 90vh;
+  display: inline-block;
+  background-color: white;
+  z-index: 11;
+}
+
+.is-today-card {
+  background-color: #eaf0f5;
+  border-width: 1.5px;
+  border-color: #0b3e69;
+}
+
+.generic-card {
+  background-color: #fff;
+}
+
+/* Grow */
+
 .hvr-grow {
   vertical-align: middle;
   transform: translateZ(0);
@@ -167,8 +160,62 @@
   transition-property: transform;
 }
 
-.hvr-grow:hover,
-.hvr-grow:focus,
-.hvr-grow:active {
+.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
   transform: scale(1.03);
+}
+
+.modal-title {
+  color: #0b3e69;
+}
+
+.modal-header {
+  background: #f9fbfc;
+  border-bottom: 0px;
+}
+
+.modal-body {
+  background: #f9fbfc;
+  border-top: 0px;
+}
+
+.modal-footer {
+  background: #f9fbfc;
+  border-top: 0px;
+}
+
+.btn-save {
+  font-size: 17px;
+  line-height: 1.47059;
+  font-weight: 400;
+  letter-spacing: -.022em;
+  font-family: SF Pro Text, SF Pro Icons, AOS Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  color: white;
+  display: inline-block;
+  min-width: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btn-save {
+  background-color: #0070c9;
+  background: linear-gradient(#42a1ec, #0070c9);
+  border-color: #07c;
+}
+
+.btn:hover {
+  opacity: .80;
+}
+
+.btn-cancel {
+  background-color: #ffffff;
+  background: linear-gradient(#ffffff, #f4f5f5);
+  color: #7e7e7e;
+  border-color: #7e7e7e;
 }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from 'ngx-webstorage';
 import { environment } from '../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import * as SHA3 from 'crypto-js/sha3'
 
 const helper = new JwtHelperService();
 
@@ -47,11 +48,15 @@ export class AppService {
   }
 
   public createUser(user) {
-    return this.http.post(this.configUrl + '/signup', user);
+    let userWIthHashPassword = { ... user };
+    userWIthHashPassword.password = SHA3(user.password).toString();
+    return this.http.post(this.configUrl + '/signup', userWIthHashPassword);
   }
 
   public loginUser(user) {
-    return this.http.post(this.configUrl + '/login', user);
+    let userWIthHashPassword = { ... user };
+    userWIthHashPassword.password = SHA3(user.password).toString();
+    return this.http.post(this.configUrl + '/login', userWIthHashPassword);
   }
 
   public pay(paymentInfo) {

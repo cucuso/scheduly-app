@@ -90,7 +90,6 @@ export class CalendarComponent implements OnInit {
 
   saveAppt() {
     if (this.editFlow) {
-      console.log('edit flow', this.appointment.id);
       this.appointments[this.year][this.month][this.day][this.editFlowIndex] = this.appointment;
       this.updateSearchDomain();
     } else {
@@ -108,11 +107,9 @@ export class CalendarComponent implements OnInit {
   cancelAppt() {
     this.appointment = <Appointment>{};
     this.modalRef.hide();
-    console.log('cancelled');
   }
 
   removeAppt(month, day, index) {
-    console.log('removing..',month, day, index);
     this.appointments[this.year][month][day].splice(index, 1);
     let indexOfSearch = this.findApptInSearchDomain();
     if (indexOfSearch !== -1) {
@@ -124,13 +121,9 @@ export class CalendarComponent implements OnInit {
 
   selectAppt(month, day, index, id) {
     this.selectedAppt = { "month": month, "day": day, "index": index, "id": id };
-    console.log(this.selectedAppt);
   }
 
   isSelected(id) {
-    if(this.selectedAppt != undefined){
-      console.log(this.selectedAppt.id == id)
-    }
     return this.selectedAppt != undefined && this.selectedAppt.id == id;
   }
 

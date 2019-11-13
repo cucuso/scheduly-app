@@ -44,6 +44,7 @@ export class CalendarComponent implements OnInit {
 
   editFlow = false;
   editFlowIndex = 0;
+  slideLeft = false;
 
   constructor(private modalService: BsModalService, private appService: AppService) {}
 
@@ -129,6 +130,7 @@ export class CalendarComponent implements OnInit {
 
   searchAppts(input) {
     this.searchResults = this.searchDomain.filter(appt => appt.text.toLowerCase().includes(input.toLowerCase()));
+    this.slideLeft = true;
     this.showResults = true;
     this.searchParam = input;
   }
@@ -179,6 +181,13 @@ export class CalendarComponent implements OnInit {
     this.selectedAppt = null;
   }
 
+  hideResults() {
+    this.slideLeft = false;
+    setTimeout (() => {
+      this.showResults = false;
+   }, 300);
+  }
+
   // TODO unit test for this stuff
   private findApptInSearchDomain(): number {
     return this.searchDomain.findIndex(searchVal => {
@@ -217,4 +226,5 @@ export class CalendarComponent implements OnInit {
 
     this.searchDomain[index] = modifiedAppt;
   }
+
 }

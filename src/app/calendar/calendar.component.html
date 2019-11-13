@@ -59,10 +59,10 @@
     </div>
 
     <!-- Results Pane-->
-    <div [ngClass]="showResults?'slide-left':'slide-out-right'" class="col-md-3 search-results">
+    <div [ngClass]="slideLeft?'slide-left':'slide-out-right'" class="col-md-3 search-results">
       <div class="row results-header">
         <div class="col-sm-12">
-            <i class="fa fa-arrow-circle-right hvr-grow link" (click)="showResults=!showResults"></i>
+            <i class="fa fa-arrow-circle-right hvr-grow link" (click)="hideResults()"></i>
           </div>
       </div>
 

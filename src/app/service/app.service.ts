@@ -86,6 +86,15 @@ export class AppService {
     }
   }
 
+  public getCompanyName(): string {
+    if (this.getToken() != null) {
+      const decodedToken = helper.decodeToken(this.getToken());
+      return decodedToken.companyName;
+    } else {
+      return null;
+    }
+  }
+
   public getExp() {
     return this.http.get(this.configUrl + '/expiration', {
       headers: { Authorization: 'Bearer ' + this.getToken() }

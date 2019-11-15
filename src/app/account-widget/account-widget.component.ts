@@ -12,7 +12,7 @@ import { AppService } from '../service/app.service';
 })
 export class AccountWidgetComponent implements OnInit {
 
-  userEmail: string;
+  companyName: string;
   showMenu: boolean = false;
   public elementRef: ElementRef;
 
@@ -21,7 +21,7 @@ export class AccountWidgetComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userEmail = this.appService.getUserEmail();
+    this.companyName = this.appService.getCompanyName();
   }
 
   handleClick(event) {

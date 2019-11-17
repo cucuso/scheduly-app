@@ -28,7 +28,6 @@ export class CalendarComponent implements OnInit {
   month = this.currentMonth;
   year = moment(this.today).year();
   day = 1;
-  mytime: Date = new Date();
 
   appointments;
   appointment = <Appointment>{contacted:false};
@@ -45,6 +44,7 @@ export class CalendarComponent implements OnInit {
   editFlow = false;
   editFlowIndex = 0;
   slideLeft = false;
+  slideRight = false;
 
   constructor(private modalService: BsModalService, private appService: AppService) {}
 
@@ -76,6 +76,7 @@ export class CalendarComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>, month, day) {
+    this.appointment.time = new Date();
     this.modalRef = this.modalService.show(template);
     this.month = month;
     this.day = day;
@@ -130,8 +131,8 @@ export class CalendarComponent implements OnInit {
 
   searchAppts(input) {
     this.searchResults = this.searchDomain.filter(appt => appt.text.toLowerCase().includes(input.toLowerCase()));
-    this.slideLeft = true;
     this.showResults = true;
+    this.slideLeft = true;
     this.searchParam = input;
   }
 
@@ -183,6 +184,7 @@ export class CalendarComponent implements OnInit {
 
   hideResults() {
     this.slideLeft = false;
+    this.slideRight = true;
     setTimeout (() => {
       this.showResults = false;
    }, 300);

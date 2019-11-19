@@ -2,10 +2,10 @@ import { Component, TemplateRef, HostListener, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as moment from 'moment';
-import { Appointments } from '../model/appointments.model';
 import { Appointment } from '../model/appointment.model';
 import { months } from '../model/months.model';
 import { AppService } from '../service/app.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
@@ -30,7 +30,7 @@ export class CalendarComponent implements OnInit {
   day = 1;
 
   appointments;
-  appointment = <Appointment>{contacted:false};
+  appointment = <Appointment>{ contacted: false };
   selectedAppt = null;
 
   searchDomain = [];
@@ -46,11 +46,23 @@ export class CalendarComponent implements OnInit {
   slideLeft = false;
   slideRight = false;
 
-  constructor(private modalService: BsModalService, private appService: AppService) {}
+  poll = Observable.interval(10000);
 
+  constructor(private modalService: BsModalService, private appService: AppService) { }
+
+  // TODO I see year hard coded
   ngOnInit() {
     this.appointments = this.appService.getAppts() !== null ? this.appService.getAppts() : { 2019: JSON.parse(JSON.stringify(months)) };
     this.searchDomain = this.appService.getApptsSearchDomain() !== null ? this.appService.getApptsSearchDomain() : [];
+    // polls server to get appts to keep status of appts up to date
+    this.poll.subscribe((val) => {
+      this.appService.retrieveUserApptsFromServer().subscribe(res => {
+        if (res != null && res[this.year] != null) {
+          this.appService.saveAppts(res);
+          this.appointments = res;
+        }
+      });
+    });
   }
 
   // Check only when no input is selected
@@ -92,10 +104,11 @@ export class CalendarComponent implements OnInit {
 
   saveAppt() {
     if (this.editFlow) {
+      this.appointment.contacted = false;
       this.appointments[this.year][this.month][this.day][this.editFlowIndex] = this.appointment;
       this.updateSearchDomain();
     } else {
-      this.appointment.id = this.getId();
+      this.appointment.id = this.generateId();
       this.appointments[this.year][this.month][this.day].push(this.appointment);
       this.appointments[this.year][this.month][this.day].sort((v1, v2) => v1.time - v2.time);
 
@@ -130,10 +143,12 @@ export class CalendarComponent implements OnInit {
   }
 
   searchAppts(input) {
+
     this.searchResults = this.searchDomain.filter(appt => appt.text.toLowerCase().includes(input.toLowerCase()));
     this.showResults = true;
     this.slideLeft = true;
     this.searchParam = input;
+    console.log('search results', this.showResults);
   }
 
   increaseMonth() {
@@ -172,11 +187,12 @@ export class CalendarComponent implements OnInit {
     this.dayOfWeekFirstOfMonth = new Array(moment(this.getSelectedMonth()).day());
   }
 
+  // TODO look into this contacted false 
   persistState() {
     this.appService.saveAppts(this.appointments);
     this.appService.saveApptsSearchDomain(this.searchDomain);
-    this.appService.updateAppointments(this.appointments).subscribe(res => console.log(res));
-    this.appointment = <Appointment>{contacted:false};
+    this.appService.updateAppointments(this.appointments).subscribe();
+    this.appointment = <Appointment>{ contacted: false };
     this.editFlow = false;
     this.editFlowIndex = 0;
     this.selectedAppt = null;
@@ -185,9 +201,11 @@ export class CalendarComponent implements OnInit {
   hideResults() {
     this.slideLeft = false;
     this.slideRight = true;
-    setTimeout (() => {
+    setTimeout(() => {
       this.showResults = false;
-   }, 300);
+      this.slideRight = false;
+    }, 300);
+    console.log('hide results', this.showResults);
   }
 
   // TODO unit test for this stuff
@@ -197,7 +215,7 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  private getId(): string {
+  private generateId(): string {
     return (
       Math.random()
         .toString(36)

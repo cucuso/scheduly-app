@@ -12,21 +12,19 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { CalendarComponent } from './calendar/calendar.component';
 import { AccountWidgetComponent } from './account-widget/account-widget.component';
 import { AppService } from './service/app.service';
-import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthGuardService } from './service/auth.service';
 
 const appRoutes: Routes = [
-  { path: 'account-settings', component: AccountSettingsComponent, canActivate: [AuthGuardService] },
+  { path: 'settings', component: AccountSettingsComponent, canActivate: [AuthGuardService] },
   { path: 'login', component:LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: '', component: CalendarComponent, canActivate: [AuthGuardService] },
-  { path: 'about', component: AboutComponent, canActivate: [AuthGuardService] }
+  { path: '', component: CalendarComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent, AccountSettingsComponent, CalendarComponent, AccountWidgetComponent, AboutComponent],
+  declarations: [AppComponent, LoginComponent, SignupComponent, AccountSettingsComponent, CalendarComponent, AccountWidgetComponent],
   imports: [
     BrowserModule,
     ModalModule.forRoot(),

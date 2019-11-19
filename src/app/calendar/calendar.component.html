@@ -13,11 +13,11 @@
           </form>
         </div>
 
-        <div class="col-sm-8 text-center">
+        <div class="col-sm-8 text-center carousel">
           <!-- TODO transitions from month to month and hover over each card-->
-          <i class="fa fa-caret-left month-arrow" (click)="decreaseMonth()"></i>
-          <span class="month-carousel">{{monthsTxt[month]}} {{year}}</span>
-          <i class="fa fa-caret-right month-arrow" (click)="increaseMonth()"></i>
+          <i class="fa fa-arrow-circle-o-left month-arrow" (click)="decreaseMonth()"></i>
+          <span class="month-carousel">{{monthsTxt[month]}}</span> <span class="year-carousel">{{year}}</span>
+          <i class="fa fa-arrow-circle-o-right month-arrow" (click)="increaseMonth()"></i>
         </div>
 
         <div class="col-sm-2">
@@ -29,41 +29,45 @@
 
   <div class="row">
     <div class="calendar" [ngClass]=" showResults ? 'col-md-9': 'col-md-12'">
-      <div *ngFor="let day of daysTxt; let i of index;" class="card card-day" [ngClass]="{'float-left': i%7!=0}">
-        {{day}}
-      </div>
-      <br>
-      <!-- days from previous month -->
-      <div *ngFor="let day of dayOfWeekFirstOfMonth" class="card card-month float-left prev-day">
-        <div class="card-body">
-        </div>
-      </div>
 
       <!-- TODO fix the conditional styling - this fucks up when year changes -->
-      <div *ngFor="let day of Object.keys(appointments[year][month]); let i of index;" class="card card-month"
-        [ngClass]="{'float-left': i +dayOfWeekFirstOfMonth.length %7!=0}">
+      <div class="month-container">
+        <div *ngFor="let day of daysTxt; let i of index;" class="card card-day-of-week" [ngClass]="{'float-left': i%7!=0}">
+          {{day}}
+        </div>
+        <br>
+        <!-- days from previous month -->
+        <div *ngFor="let day of dayOfWeekFirstOfMonth" class="card card-month float-left prev-day">
+          <div class="card-body">
+          </div>
+        </div>
+        <div *ngFor="let day of Object.keys(appointments[year][month]); let i of index;" class="card card-month"
+          [ngClass]="{'float-left': i +dayOfWeekFirstOfMonth.length %7!=0}">
 
-        <div class="card-body" (dblclick)="openModal(template, month, day)">
-
-          <p class="card-title day-title" [ngClass]="{'is-today-card':(dayOfMonth == day) && (currentMonth == month)}">{{day}}</p>
-
-          <div *ngFor="let appt of appointments[year][month][day]; index as i;">
-            <!-- appt entry -->
-            <div class="card-link hvr-grow" (click)="selectAppt(month, day, i, appt.id)" (dblclick)="editAppt(template, month, day, i)"
-              [ngClass]="isSelected(appt.id) ? 'card-link-selected' : 'card-link'">
-              {{appt.title}}
+          <div class="card-body" (dblclick)="openModal(template, month, day)">
+            <p class="day-title" [ngClass]="{'is-today-card':(dayOfMonth == day) && (currentMonth == month)}">{{day}}</p>
+            <div *ngFor="let appt of appointments[year][month][day]; index as i;">
+              <!-- appt entry -->
+              <div class="card-link hvr-grow" (click)="selectAppt(month, day, i, appt.id)" (dblclick)="editAppt(template, month, day, i)"
+                [ngClass]="{'card-link-cancelled':appt.response && appt.response == 'CANCELLED', 'card-link-selected' : isSelected(appt.id)}">
+                {{appt.title}}
+                <i *ngIf="appt.response && appt.response == 'CONFIRMED'" class="fa fa-check-circle-o" aria-hidden="true"></i>
+                <i *ngIf="appt.response && appt.response == 'CANCELLED'" class="fa fa-times-circle" aria-hidden="true"></i>
+                <i *ngIf="!appt.response" class="fa fa-question-circle" aria-hidden="true"></i>
+              </div>
+              <!-- end of appt entry -->
             </div>
           </div>
         </div>
       </div>
+
+
     </div>
 
     <!-- Results Pane-->
     <div *ngIf="showResults" [ngClass]="{'slide-left':slideLeft==true, 'slide-out-right':slideRight==true}" class="col-md-3 search-results">
-      <div class="row results-header">
-        <div class="col-sm-12">
-            <i class="fa fa-arrow-circle-right hvr-grow link" (click)="hideResults()"></i>
-          </div>
+      <div class="results-header">
+        <i class="fa fa-arrow-circle-right hvr-grow link" (click)="hideResults()"></i>
       </div>
 
       <div *ngIf="searchResults.length < 1" class="no-results">

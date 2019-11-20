@@ -148,7 +148,6 @@ export class CalendarComponent implements OnInit {
     this.showResults = true;
     this.slideLeft = true;
     this.searchParam = input;
-    console.log('search results', this.showResults);
   }
 
   increaseMonth() {
@@ -205,7 +204,6 @@ export class CalendarComponent implements OnInit {
       this.showResults = false;
       this.slideRight = false;
     }, 300);
-    console.log('hide results', this.showResults);
   }
 
   // TODO unit test for this stuff

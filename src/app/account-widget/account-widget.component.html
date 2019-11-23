@@ -2,7 +2,7 @@
   <span (click)="showMenu=!showMenu" class="account-text" placement="bottom"> {{companyName}} <i class="user-name fa fa-cog"
       aria-hidden="true"></i></span>
 </div>
-<div *ngIf="showMenu" class="menu card">
+<div *ngIf="showMenu" class="menu card slide-in-top">
   <div class="card-body">
     <p (click)="goToAccountSettings()" class="link">Settings</p>
     <p (click)="signout()" class="link">Signout</p>

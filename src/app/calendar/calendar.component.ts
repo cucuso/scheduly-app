@@ -40,6 +40,7 @@ export class CalendarComponent implements OnInit {
 
   submitted = false;
   dayOfWeekFirstOfMonth = new Array(moment(this.getSelectedMonth()).day());
+  daysFromNextMonth = [];
 
   editFlow = false;
   editFlowIndex = 0;
@@ -52,8 +53,9 @@ export class CalendarComponent implements OnInit {
 
   // TODO I see year hard coded
   ngOnInit() {
-    this.appointments = this.appService.getAppts() !== null ? this.appService.getAppts() : { 2019: JSON.parse(JSON.stringify(months)) };
+    this.appointments = this.appService.getAppts() !== null ? this.appService.getAppts() : this.getEmptyCalendar();
     this.searchDomain = this.appService.getApptsSearchDomain() !== null ? this.appService.getApptsSearchDomain() : [];
+    this.findDaysFromNextMonth();
     // polls server to get appts to keep status of appts up to date
     this.poll.subscribe((val) => {
       this.appService.retrieveUserApptsFromServer().subscribe(res => {
@@ -161,6 +163,7 @@ export class CalendarComponent implements OnInit {
       this.month++;
     }
     this.dayOfWeekFirstOfMonth = new Array(moment(this.getSelectedMonth()).day());
+    this.findDaysFromNextMonth();
   }
 
   decreaseMonth() {
@@ -174,6 +177,7 @@ export class CalendarComponent implements OnInit {
       this.month--;
     }
     this.dayOfWeekFirstOfMonth = new Array(moment(this.getSelectedMonth()).day());
+    this.findDaysFromNextMonth();
   }
 
   getSelectedMonth() {
@@ -184,6 +188,7 @@ export class CalendarComponent implements OnInit {
     this.year = moment(date).year();
     this.month = moment(date).month();
     this.dayOfWeekFirstOfMonth = new Array(moment(this.getSelectedMonth()).day());
+    this.findDaysFromNextMonth();
   }
 
   // TODO look into this contacted false 
@@ -204,6 +209,14 @@ export class CalendarComponent implements OnInit {
       this.showResults = false;
       this.slideRight = false;
     }, 300);
+  }
+
+  findDaysFromNextMonth() {
+    let numOfDaysInMonth: number = Object.keys(this.appointments[this.year][this.month]).length;
+    let prevMonthDays: number = this.dayOfWeekFirstOfMonth.length;
+    let num = (numOfDaysInMonth + prevMonthDays) % 7;
+    let response = (num === 0) ? 0 : 7 - num;
+    this.daysFromNextMonth = Array(response);
   }
 
   // TODO unit test for this stuff
@@ -243,6 +256,13 @@ export class CalendarComponent implements OnInit {
     modifiedAppt.phoneNumber = this.appointment.phoneNumber;
 
     this.searchDomain[index] = modifiedAppt;
+  }
+
+  private getEmptyCalendar() {
+    let year = this.year;
+    let emptyCalendar = {};
+    emptyCalendar[year] = JSON.parse(JSON.stringify(months));
+    return emptyCalendar;
   }
 
 }

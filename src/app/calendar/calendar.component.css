@@ -3,6 +3,17 @@
   overflow: hidden;
 }
 
+.inside-week {
+  float: left;
+  overflow: hidden;
+  border-right-width: 0px;
+  border-top-width: 0px;
+}
+
+.first-se7en {
+  border-top-width: 1px;
+}
+
 .card-day-of-week {
   height: 20px;
   width: 14%;
@@ -12,27 +23,39 @@
   margin-top: 0px;
   text-align: center;
   font-weight: bold;
-  font-size:0.8em;
-  color:rgb(84, 84, 85)
+  font-size: 0.8em;
+  color: rgb(84, 84, 85)
 }
 
 .card-month {
-  height: 180px;
+  height: 200px;
   width: 14%;
   overflow: scroll;
-  border-width:1px;
   border-radius: 0px;
-  border-color:rgb(194, 192, 192);
+  border-color: rgb(224, 222, 222);
+}
+
+.next-month-days {
+  background-color: rgb(249, 249, 249);
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 1px;
+  float: left;
+  overflow: hidden;
+}
+
+.end-week {
+  border-right-width: 1px;
 }
 
 .month-container {
-  padding-top:40px;
-  padding-left:25px;
+  padding-top: 40px;
+  padding-left: 25px;
   border-radius: 10px;
-  margin-top:20px;
+  margin-top: 20px;
   height: 100%;
   background-color: white;
-  margin-bottom:20px;
+  margin-bottom: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -62,8 +85,8 @@
   color: grey;
 }
 
-.carousel{
-  margin-top:10px; 
+.carousel {
+  margin-top: 10px;
 }
 
 .month-carousel {
@@ -128,17 +151,20 @@
   color: white;
 }
 
-
 .card-link:hover, .link:hover {
   cursor: pointer;
 }
 
-.prev-day {
-  background-color: rgb(243, 240, 240);
+.prev-month-days {
+  background-color: rgb(249, 249, 249);
+  border-right-width: 0px;
+  border-bottom-width: 1px;
+  float: left;
+  overflow: hidden;
 }
 
 .day-title {
-  color:rgb(99, 98, 98);
+  color: rgb(99, 98, 98);
   font-size: 0.8em;
   margin-top: -18px;
   margin-left: -17px;
@@ -152,12 +178,12 @@
 }
 
 .results-title {
-  color:#0b3e69;
+  color: #0b3e69;
   font-weight: bold;
 }
 
 .search-results {
-  margin-top:20px;
+  margin-top: 20px;
   border-radius: 10px;
   padding: 0;
   background-color: white;
@@ -176,12 +202,12 @@
 }
 
 .fa-arrow-circle-right {
-  margin-top:5px;
-  color:#0b3e69;
+  margin-top: 5px;
+  color: #0b3e69;
 }
 
 .fa-arrow-circle-right:hover {
-  color:#093152;
+  color: #093152;
 }
 
 .search-result-title {
@@ -207,6 +233,7 @@
 }
 
 /* Grow */
+
 .hvr-grow {
   vertical-align: middle;
   transform: translateZ(0);

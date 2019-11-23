@@ -1,4 +1,4 @@
-import { Component, TemplateRef, HostListener, OnInit } from '@angular/core';
+import { Component, TemplateRef, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as moment from 'moment';
@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
   // Needed to iterate over keys which are the days in each month
   Object = Object;
   modalRef: BsModalRef;
@@ -48,6 +48,7 @@ export class CalendarComponent implements OnInit {
   slideRight = false;
 
   poll = Observable.interval(10000);
+  sub;
 
   constructor(private modalService: BsModalService, private appService: AppService) { }
 
@@ -57,7 +58,8 @@ export class CalendarComponent implements OnInit {
     this.searchDomain = this.appService.getApptsSearchDomain() !== null ? this.appService.getApptsSearchDomain() : [];
     this.findDaysFromNextMonth();
     // polls server to get appts to keep status of appts up to date
-    this.poll.subscribe((val) => {
+    
+    this.sub = this.poll.subscribe((val) => {
       this.appService.retrieveUserApptsFromServer().subscribe(res => {
         if (res != null && res[this.year] != null) {
           this.appService.saveAppts(res);
@@ -65,6 +67,10 @@ export class CalendarComponent implements OnInit {
         }
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   // Check only when no input is selected

@@ -10,7 +10,7 @@
   border-top-width: 0px;
 }
 
-.first-se7en {
+.first-seven {
   border-top-width: 1px;
 }
 
@@ -27,13 +27,66 @@
   color: rgb(84, 84, 85)
 }
 
-.card-month {
-  height: 200px;
-  width: 14%;
-  overflow: scroll;
-  border-radius: 0px;
-  border-color: rgb(224, 222, 222);
+
+@media (max-width: 767px) {
+  .card-month {
+    height: 200px;
+    width: 46%;
+    overflow: scroll;
+    border-radius: 0px;
+    border-color: rgb(224, 222, 222);
+  }
+
+.month-carousel {
+  font-size: 1.2em;
+  color: #fff;
+  font-weight: bold;
 }
+
+.year-carousel {
+  font-size: 1.2em;
+  color: #fff;
+}
+
+.month-arrow {
+  font-size: 1.2em;
+  opacity: 0.5;
+  margin: 0 10px 0 10px;
+  color: #fff;
+}
+}
+
+@media (min-width: 768px) {
+  .card-month {
+    height: 200px;
+    width: 14%;
+    overflow: scroll;
+    border-radius: 0px;
+    border-color: rgb(224, 222, 222);
+  }
+
+.month-carousel {
+  font-size: 1.8em;
+  color: #fff;
+  font-weight: bold;
+}
+
+.year-carousel {
+  font-size: 1.8em;
+  color: #fff;
+}
+
+.month-arrow {
+  font-size: 1.8em;
+  opacity: 0.5;
+  margin: 0 10px 0 10px;
+  color: #fff;
+}
+}
+
+
+
+
 
 .next-month-days {
   background-color: rgb(249, 249, 249);
@@ -86,25 +139,7 @@
 }
 
 .carousel {
-  margin-top: 10px;
-}
-
-.month-carousel {
-  font-size: 1.8em;
-  color: #fff;
-  font-weight: bold;
-}
-
-.year-carousel {
-  font-size: 1.8em;
-  color: #fff;
-}
-
-.month-arrow {
-  font-size: 1.8em;
-  opacity: 0.5;
-  margin: 0 10px 0 10px;
-  color: #fff;
+  margin-top: 5px;
 }
 
 .month-arrow:hover {
@@ -159,7 +194,6 @@
   background-color: rgb(249, 249, 249);
   border-right-width: 0px;
   border-bottom-width: 1px;
-  float: left;
   overflow: hidden;
 }
 

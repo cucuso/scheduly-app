@@ -3,7 +3,7 @@
     <div class="col-md-12 header">
       <div class="row">
 
-        <div class="col-sm-2 search-input">
+        <div class="col-sm-2 search-input d-none d-md-block">
           <form (ngSubmit)="searchAppts(searchInput.value)" #searchForm="ngForm">
             <div class="form-group">
               <input type="text" class="form-control input-lg" style="outline:none" id="searchInput" #searchInput
@@ -20,7 +20,7 @@
           <i class="fa fa-arrow-circle-o-right month-arrow" (click)="increaseMonth()"></i>
         </div>
 
-        <div class="col-sm-2">
+        <div class="col-sm-2 d-none d-md-block">
           <app-account-widget></app-account-widget>
         </div>
       </div>
@@ -28,20 +28,20 @@
   </div>
 
   <div class="row">
-    <div class="calendar" [ngClass]=" showResults ? 'col-md-9': 'col-md-12'">
+    <div class="calendar" [ngClass]=" showResults ? 'col-md-9 col-sm-12': 'col-md-12'">
 
       <div class="month-container">
-        <div *ngFor="let day of daysTxt; let i of index;" class="card card-day-of-week" [ngClass]="{'float-left': i%7!=0}">
+        <div *ngFor="let day of daysTxt; let i = index;" class="card card-day-of-week float-left d-none d-md-block">
           {{day}}
         </div>
         <br>
         <!-- days from previous month -->
-        <div *ngFor="let day of dayOfWeekFirstOfMonth" class="card card-month prev-month-days">
+        <div *ngFor="let day of dayOfWeekFirstOfMonth; let i = index;" class="card card-month prev-month-days float-left d-none d-md-block">
         </div>
         <!-- list all appts for day-->
         <div *ngFor="let day of Object.keys(appointments[year][month]); let i of index;" class="card card-month"
-          [ngClass]="{'inside-week': i+1 %7!=0, 'end-week': (i*1 + dayOfWeekFirstOfMonth.length) % 7 === 0, 'first-se7en': (i-1 + dayOfWeekFirstOfMonth.length) < 7}">
-          <div class="card-body" (dblclick)="openModal(template, month, day)">
+          [ngClass]="{'inside-week': i+1 %7!=0, 'end-week': (i*1 + dayOfWeekFirstOfMonth.length) % 7 === 0, 'first-seven': (i-1 + dayOfWeekFirstOfMonth.length) < 7}">
+          <div class="card-body" (dblclick)="openModal(template, month, day)"  (press)="openModal(template, month, day)">
             <p class="day-title" [ngClass]="{'is-today-card':(dayOfMonth == day) && (currentMonth == month)}">{{day}}</p>
             <div *ngFor="let appt of appointments[year][month][day]; index as i;">
               <!-- appt entry -->
@@ -65,7 +65,7 @@
     </div>
 
     <!-- Results Pane-->
-    <div *ngIf="showResults" [ngClass]="{'slide-left':slideLeft==true, 'slide-out-right':slideRight==true}" class="col-md-3 search-results">
+    <div *ngIf="showResults" [ngClass]="{'slide-left':slideLeft==true, 'slide-out-right':slideRight==true}" class="col-md-3 col-sm-12 search-results">
       <div class="results-header text-center">
         <i class="fa fa-arrow-circle-right hvr-grow link float-left" (click)="hideResults()"></i>
         <span class="results-title">Search Results</span>

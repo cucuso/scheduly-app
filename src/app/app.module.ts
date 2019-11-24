@@ -1,4 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
+import * as Hammer from 'hammerjs';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -16,9 +18,19 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthGuardService } from './service/auth.service';
 
+export class MyHammerConfig extends HammerGestureConfig  {
+  overrides = <any>{
+      // override hammerjs default configuration
+      'pinch': { enable: false },
+      'rotate': { enable: false },
+      'swipe': { direction: Hammer.DIRECTION_ALL  }
+  }
+}
+
+
 const appRoutes: Routes = [
   { path: 'settings', component: AccountSettingsComponent, canActivate: [AuthGuardService] },
-  { path: 'login', component:LoginComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: '', component: CalendarComponent, canActivate: [AuthGuardService] }
 ];
@@ -36,7 +48,11 @@ const appRoutes: Routes = [
     HttpClientModule,
     Ng2Webstorage
   ],
-  providers: [AppService, AuthGuardService],
+  providers: [AppService, AuthGuardService,
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig
+    }],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

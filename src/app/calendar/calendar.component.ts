@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit, OnDestroy {
+
   // Needed to iterate over keys which are the days in each month
   Object = Object;
   modalRef: BsModalRef;

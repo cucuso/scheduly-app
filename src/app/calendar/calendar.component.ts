@@ -59,7 +59,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.searchDomain = this.appService.getApptsSearchDomain() !== null ? this.appService.getApptsSearchDomain() : [];
     this.findDaysFromNextMonth();
     // polls server to get appts to keep status of appts up to date
-    
+
     this.sub = this.poll.subscribe((val) => {
       this.appService.retrieveUserApptsFromServer().subscribe(res => {
         if (res != null && res[this.year] != null) {
@@ -224,6 +224,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
     let num = (numOfDaysInMonth + prevMonthDays) % 7;
     let response = (num === 0) ? 0 : 7 - num;
     this.daysFromNextMonth = Array(response);
+  }
+
+  deleteSelected() {
+    if (this.selectedAppt && !this.editFlow) {
+      this.removeAppt(this.selectedAppt.month, this.selectedAppt.day, this.selectedAppt.index);
+    }
   }
 
   // TODO unit test for this stuff

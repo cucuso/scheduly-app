@@ -7,41 +7,125 @@
 <div class="container">
   <div class="row">
 
-    <div class="offset-md-3 col-md-6 card">
+    <div class="offset-md-2 col-md-9 card">
 
-      <div class="account-info">
-        Email: {{user.email}}
-        <div *ngIf="accountType == 'FREE'">
-          <br> Version: Not Paid
-          <br> Upgrade to paid Version by paying below
+      <div *ngIf="!companyNameUpdated">
+        <div>
+          <div class="title">
+            <h4>Account Information</h4>
+          </div>
+
+          <div class="account-info">
+            Email: {{user.email}}
+
+            <!-- account status -->
+            <div>
+              <i *ngIf="accountType === undefined" class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+
+              <div *ngIf="accountType !== undefined && accountType == 'EXPIRED'">
+                <br>
+                <br> Your account expired: <b>{{expDate|date:'short'}}</b> Please make a payment to bring your account
+                up
+                to date
+              </div>
+
+              <div *ngIf="accountType !== undefined && accountType == 'CURRENT'">
+                <br> Your account is up to date
+                <br> Expires: <i>{{expDate|date:'short'}}</i>
+
+              </div>
+            </div>
+          </div>
+          <br>
+          <div>
+            <p>
+              Company name is shown when a text reminder goes out. You can change it here.
+            </p>
+          </div>
+          <div>
+
+            <div class="form-group row">
+              <label for="companyName" class="col-md-2 col-form-label">Company Name:</label>
+              <div class="col-md-4">
+                <input class="form-control" id="companyName" type="text" [(ngModel)]="user.companyName" />
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-success " (click)="updateCompanyName()"> Save Changes</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <br>
+        <div>
+
         </div>
 
-        <div *ngIf="accountType == 'EXPIRED'">
-          <br> Version: Expired
-          <br> Expired: {{expDate}} Please pay your monthly bill to continue service
-        </div>
+      </div>
 
-        <div *ngIf="accountType == 'CURRENT'">
-          <br> Version: PAID
-          <br> Expires: {{expDate|date:'short'}}
-
+      <div *ngIf="companyNameUpdated">
+        <div>
+          Your company name has been successfully updated to <b>{{user.companyName}}</b> !
         </div>
       </div>
 
-      <div *ngIf="accountType != 'CURRENT'" class="payment-section">
-        <label for="card-element">
-          Credit or debit card
-        </label>
-        <div id="card-element">
-          <!-- A Stripe Element will be inserted here. -->
+
+      <div class="payment">
+
+        <div *ngIf="accountType != 'CURRENT'" class="payment-section">
+
+            <div class="btn-group" btnRadioGroup [(ngModel)]="uncheckableRadioModel">
+                <label class="btn btn-info" btnRadio="month"
+                       uncheckable tabindex="0" role="button">1 MONTH($9.99)</label>
+                <label class="btn btn-info" btnRadio="year"
+                       uncheckable tabindex="0" role="button">1 YEAR($99.99)</label>
+              </div>
+              <br>
+
+          <label for="card-element">
+            Credit or debit card
+          </label>
+          <div id="card-element">
+            <!-- A Stripe Element will be inserted here. -->
+          </div>
+
+          <!-- Used to display form errors. -->
+          <div id="card-errors" role="alert"></div>
+          <br>
+          <button (click)="submitPayment()" class="btn btn-success">Submit Payment</button>
         </div>
+      </div>
+      <hr>
 
-        <!-- Used to display form errors. -->
-        <div id="card-errors" role="alert"></div>
-        <br>
-
-        <button (click)="submitPayment()" class="btn btn-success">Submit Payment</button>
-
+      <div class="title">
+        <h4>Delete Account</h4>
+      </div>
+      <p>
+        Delete your account and all information related to your account such as your profile page, badges earned and
+        leaderboard positions. Please be aware that all data will be permanently lost if you delete your account.
+      </p>
+      <div>
+        <button type="submit" class="btn btn-delete" (click)="openModal(template)"> Delete</button>
       </div>
     </div>
   </div>
+
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Are you absolutely sure?</h4>
+    </div>
+    <div class="modal-body">
+
+      This action cannot be undone. This will permanently delete your account for the company <b>{{user.companyName}}</b>,
+      appointments, appointment information.
+      Please type in the name of your company to confirm.
+      <br>
+
+      <input type="text" #inputCompanyName style="width:100%">
+    </div>
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-delete" (click)="deleteAcct()" [disabled]="user.companyName !== inputCompanyName.value">
+        I understand, delete my account</button>
+    </div>
+  </ng-template>

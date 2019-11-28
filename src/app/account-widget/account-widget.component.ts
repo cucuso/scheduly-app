@@ -48,7 +48,4 @@ export class AccountWidgetComponent implements OnInit {
     this.router.navigateByUrl("/settings");
   }
 
-  goToAbout() {
-    this.router.navigateByUrl("/about");
-  }
 }

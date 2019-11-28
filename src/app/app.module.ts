@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ModalModule, TimepickerModule, TooltipModule } from 'ngx-bootstrap';
+import { ModalModule, TimepickerModule, TooltipModule, ButtonsModule } from 'ngx-bootstrap';
 import { Ng2Webstorage } from 'ngx-webstorage';
 
 import { AppComponent } from './app.component';
@@ -42,7 +42,8 @@ export class HammerConfig extends HammerGestureConfig {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    Ng2Webstorage
+    Ng2Webstorage,
+    ButtonsModule
   ],
   providers: [AppService, AuthGuardService,
     {

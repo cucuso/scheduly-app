@@ -100,4 +100,22 @@ export class AppService {
       headers: { Authorization: 'Bearer ' + this.getToken() }
     });
   }
+
+  public refreshToken() {
+    return this.http.get(this.configUrl + '/refresh-token', {
+      headers: { Authorization: 'Bearer ' + this.getToken() }
+    });
+  }
+
+  public updateCompanyName(companyName) {
+    return this.http.put(this.configUrl + '/company-name', companyName, {
+      headers: { Authorization: 'Bearer ' + this.getToken() }
+    });
+  }
+
+  public deleteAcct() {
+    return this.http.delete(this.configUrl + '/delete', {
+      headers: { Authorization: 'Bearer ' + this.getToken() }
+    });
+  }
 }

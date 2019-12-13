@@ -112,6 +112,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   saveAppt() {
+
+    const dateOfAppt = new Date(this.appointment.time);
+    dateOfAppt.setDate(this.day);
+    this.appointment.time = dateOfAppt;
+
     if (this.editFlow) {
       this.appointment.contacted = false;
       this.appointments[this.year][this.month][this.day][this.editFlowIndex] = this.appointment;
@@ -198,7 +203,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.findDaysFromNextMonth();
   }
 
-  // TODO look into this contacted false 
+  // TODO look into this contacted false
   persistState() {
     this.appService.saveAppts(this.appointments);
     this.appService.saveApptsSearchDomain(this.searchDomain);

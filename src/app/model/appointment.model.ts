@@ -5,6 +5,7 @@ export class Appointment {
     public description: string,
     public time: Date,
     public phoneNumber: string,
-    public contacted:boolean
+    public contacted:boolean,
+    public timezoneOffset: number
   ) {}
 }

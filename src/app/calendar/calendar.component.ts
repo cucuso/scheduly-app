@@ -53,13 +53,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   constructor(private modalService: BsModalService, private appService: AppService) { }
 
-  // TODO I see year hard coded
   ngOnInit() {
     this.appointments = this.appService.getAppts() !== null ? this.appService.getAppts() : this.getEmptyCalendar();
-    this.searchDomain = this.appService.getApptsSearchDomain() !== null ? this.appService.getApptsSearchDomain() : [];
+    this.searchDomain = this.appService.getApptsSearchDomain();
     this.findDaysFromNextMonth();
     // polls server to get appts to keep status of appts up to date
-
     this.sub = this.poll.subscribe((val) => {
       this.appService.retrieveUserApptsFromServer().subscribe(res => {
         if (res != null && res[this.year] != null) {
@@ -88,7 +86,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   // Clear selected appointment
   @HostListener('click', ['$event'])
   onClick(event) {
-
     if (!event.srcElement.className.includes('card-link')) {
       this.selectedAppt = null;
       this.editFlow = false;
@@ -112,11 +109,14 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   saveAppt() {
-
     const dateOfAppt = new Date(this.appointment.time);
     dateOfAppt.setDate(this.day);
+    dateOfAppt.setMonth(this.month);
+    dateOfAppt.setFullYear(this.year);
     this.appointment.time = dateOfAppt;
-
+    // TODO this is needed in order to keep track of user timezone so it displays correctly on text message
+    this.appointment.timezoneOffset = dateOfAppt.getTimezoneOffset();
+    console.log(this.appointment);
     if (this.editFlow) {
       this.appointment.contacted = false;
       this.appointments[this.year][this.month][this.day][this.editFlowIndex] = this.appointment;
@@ -157,7 +157,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   searchAppts(input) {
-
     this.searchResults = this.searchDomain.filter(appt => appt.text.toLowerCase().includes(input.toLowerCase()));
     this.showResults = true;
     this.slideLeft = true;
@@ -267,13 +266,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
       return (this.appointment.id === element.id);
     });
 
+    // TODO fix case where appointments exist but there is no search domain locally
+    if(index !== -1) {
     let modifiedAppt = this.searchDomain[index];
-
     modifiedAppt.text = this.appointment.title + ' ' + this.appointment.description + ' ' + this.appointment.phoneNumber;
     modifiedAppt.title = this.appointment.title;
     modifiedAppt.phoneNumber = this.appointment.phoneNumber;
 
     this.searchDomain[index] = modifiedAppt;
+    }
   }
 
   private getEmptyCalendar() {

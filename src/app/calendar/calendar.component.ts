@@ -55,7 +55,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.appointments = this.appService.getAppts() !== null ? this.appService.getAppts() : this.getEmptyCalendar();
-    this.searchDomain = this.appService.getApptsSearchDomain();
+    this.searchDomain = this.appService.getApptsSearchDomain()!== null ? this.appService.getApptsSearchDomain() : [];
     this.findDaysFromNextMonth();
     // polls server to get appts to keep status of appts up to date
     this.sub = this.poll.subscribe((val) => {
@@ -116,7 +116,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.appointment.time = dateOfAppt;
     // TODO this is needed in order to keep track of user timezone so it displays correctly on text message
     this.appointment.timezoneOffset = dateOfAppt.getTimezoneOffset();
-    console.log(this.appointment);
     if (this.editFlow) {
       this.appointment.contacted = false;
       this.appointments[this.year][this.month][this.day][this.editFlowIndex] = this.appointment;
